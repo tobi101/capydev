@@ -1,99 +1,144 @@
-/* Общие стили */
+/* Устанавливаем базовые стили для body и основного контента */
+/* Делаем canvas фоном */
+canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -10 !important; /* Уменьшаем z-index, чтобы точно не перекрывал контент */
+    pointer-events: none; /* Запрещаем кликать по canvas */
+}
+
+/* Фиксируем header и nav поверх canvas */
+header, nav {
+    position: relative;
+    z-index: 10; /* Гарантируем, что header будет над canvas */
+    background: rgba(200, 255, 200, 0.9); /* Добавляем прозрачный фон для читаемости */
+    backdrop-filter: blur(5px); /* Размытие фона для лучшего эффекта */
+}
+
+/* Основной контейнер */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
+    overflow-x: hidden; /* Отключаем горизонтальный скролл */
+    background-color: #000; /* Фон чёрный на случай, если canvas не загрузится */
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
     padding: 0;
 }
 
-/* Стили для header */
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-}
-header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-}
-
-/* Стили для секции о компании */
-section {
-    padding: 40px 20px;
-    text-align: center;
-}
-section h2 {
-    margin-bottom: 20px;
-    font-size: 2rem;
+nav ul li a {
+    text-decoration: none;
     color: #333;
 }
-section p {
-    font-size: 1.1rem;
-    color: #666;
+
+/* Секции */
+section {
+    margin-bottom: 40px;
 }
 
-/* Стили для карточек работ */
-.works .card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+section h2 {
+    margin-bottom: 20px;
 }
-.works .card img {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+
+/* Горизонтальные списки для проектов и команды */
+.project-list, .team-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 10px;
 }
-.works .card-body {
-    text-align: center;
+
+.project-item, .team-member {
+    flex: 0 0 auto;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    transition: all 0.5s ease;
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
 }
-.works .card-text {
-    font-size: 1rem;
+
+/* При активном элементе карточка увеличивается */
+.project-item.active, .team-member.active {
+    width: 400px;
+    height: 400px;
+}
+
+/* Изображения и базовая типографика */
+.project-item img, .team-member img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.project-item h3, .team-member h3 {
+    margin: 5px 0;
+}
+
+/* Скрытые детали (появляются при active) */
+.project-item .details, .team-member .details {
+    display: none;
+    margin-top: 10px;
+    font-size: 14px;
     color: #555;
 }
 
-/* Стили для футера */
-footer {
-    background-color: #333;
-    color: white;
-    padding: 40px 20px;
-}
-footer h2 {
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-}
-footer form {
-    max-width: 600px;
-    margin: 0 auto;
-}
-footer input, footer textarea {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-footer button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-footer button:hover {
-    background-color: #45a049;
+.project-item.active .details, .team-member.active .details {
+    display: block;
 }
 
-/* Адаптивные стили */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2rem;
-    }
-    section h2 {
-        font-size: 1.5rem;
-    }
-    footer h2 {
-        font-size: 1.5rem;
-    }
+/* Стили для раздела навыков */
+.skills-list {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    background: rgba(255,255,255,0.7);
+}
+
+/* Узлы навыков */
+.skill-item {
+    width: 120px;
+    height: 120px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+/* Описание, выезжающее сбоку от узла */
+.skill-item .skill-detail {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(0, -50%);
+    background-color: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s, left 0.3s;
+    pointer-events: none;
+}
+
+.skill-item:hover .skill-detail {
+    left: 105%;
+    opacity: 1;
+}
+
+/* Стили для линий графа */
+.skills-list svg line {
+    stroke: #888;
+    stroke-width: 2;
 }

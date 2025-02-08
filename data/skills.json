@@ -1,0 +1,37 @@
+﻿{
+  "localization": {
+    "sectionTitle": {
+      "ru": "Навыки",
+      "en": "Skills"
+    }
+  },
+  "items": [
+    {
+      "id": "1",
+      "name": { "ru": "Unity", "en": "Unity" },
+      "detail": {
+        "ru": "Опыт разработки игр на Unity более 5 лет.",
+        "en": "Over 5 years of experience with Unity."
+      },
+      "connections": ["2", "3"]
+    },
+    {
+      "id": "2",
+      "name": { "ru": "C#", "en": "C#" },
+      "detail": {
+        "ru": "Эксперт в языке программирования C#.",
+        "en": "Expert in C# programming."
+      },
+      "connections": ["1"]
+    },
+    {
+      "id": "3",
+      "name": { "ru": "Photoshop", "en": "Photoshop" },
+      "detail": {
+        "ru": "Уверенное владение инструментами Photoshop для создания графики.",
+        "en": "Proficient with Photoshop for graphic design."
+      },
+      "connections": ["1"]
+    }
+  ]
+}

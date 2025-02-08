@@ -1,0 +1,20 @@
+﻿{
+  "localization": {
+    "sectionTitle": {
+      "ru": "Команда",
+      "en": "Team"
+    }
+  },
+  "items": [
+    {
+      "name": { "ru": "Иван Иванов", "en": "Ivan Ivanov" },
+      "role": { "ru": "Главный разработчик", "en": "Lead Developer" },
+      "photo": "images/ivan.jpg"
+    },
+    {
+      "name": { "ru": "Петр Петров", "en": "Petr Petrov" },
+      "role": { "ru": "Художник", "en": "Artist" },
+      "photo": "images/petr.jpg"
+    }
+  ]
+}
