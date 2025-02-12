@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/TeamCards.css">
+    <link rel="stylesheet" href="styles/projects.css">
 </head>
 <body>
 <!-- p5.js canvas будет создан автоматически и размещён на фоне -->
@@ -32,9 +33,11 @@
 <main>
     <!-- Раздел проектов -->
     <section id="projects">
-        <h2></h2>
-        <div class="project-list">
-            <!-- Элементы проектов будут подгружаться сюда -->
+        <div class="container">
+            <h2 class="section-title">Наши проекты</h2>
+            <div id="projects-container">
+                <!-- Здесь будут генерироваться карточки -->
+            </div>
         </div>
     </section>
 
@@ -70,6 +73,8 @@
 <script src="src/background.js"></script>
 <!-- Подключаем teamCards.js -->
 <script src="src/teamCards.js"></script>
+<!-- Подключаем projects.js -->
+<script src="src/projects.js"></script>
 <!-- Основной скрипт сайта -->
 <script src="src/main.js"></script>
 

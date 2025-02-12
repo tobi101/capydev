@@ -28,8 +28,9 @@ section h2 {
 
 /* Заголовок секции */
 .section-title {
+    text-align: center;
     font-size: 2rem;
-    color: #007b5e;
+    color: #eee;
     margin-bottom: 50px;
     text-transform: uppercase;
 }

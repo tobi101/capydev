@@ -1,0 +1,72 @@
+﻿/* Секция проектов */
+#projects {
+    width: 100%;
+    padding: 60px 0;
+}
+
+
+/* Контейнер для карточек */
+#projects-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px; /* Добавляем отступы между карточками */
+}
+
+/* Карточка проекта */
+.project-card {
+    width: 90%;
+    max-width: 700px;
+    background: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 1s ease-out, opacity 1s ease-out;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Текстовая часть */
+.project-text {
+    flex: 1;
+}
+
+.project-text h3 {
+    margin: 0 0 10px;
+    font-size: 1.8rem;
+    color: #007b5e;
+}
+
+.project-text p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0 0 10px;
+}
+
+/* Изображение */
+.project-card img {
+    width: 300px;
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Изначальное положение карточек */
+.project-card.slide-left {
+    transform: translateX(-100%);
+}
+
+.project-card.slide-right {
+    transform: translateX(100%);
+}
+
+/* При появлении карточки */
+.project-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+}

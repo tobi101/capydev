@@ -17,29 +17,8 @@ let teamData = {};
 const lang = navigator.language.startsWith('en') ? 'en' : 'ru';
 
 function renderPage() {
-    // Установка заголовка и навигационных ссылок
-    document.getElementById('site-title').textContent = contentData.localization.siteTitle[lang];
-    document.getElementById('link-projects').textContent = contentData.localization.nav.projects[lang];
-    document.getElementById('link-team').textContent = contentData.localization.nav.team[lang];
 
-    // Отрисовка раздела "Проекты"
-    const projectsSection = document.querySelector('#projects');
-    projectsSection.querySelector('h2').textContent = projectsData.localization.sectionTitle[lang];
-    const projectListContainer = projectsSection.querySelector('.project-list');
-    projectsData.items.forEach(item => {
-        const projectDiv = document.createElement('div');
-        projectDiv.className = 'project-item';
-        projectDiv.innerHTML = `
-      <h3>${item.title[lang]}</h3>
-      <img src="${item.previewImage}" alt="${item.title[lang]}">
-      <div class="summary">${item.shortDescription[lang]}</div>
-      <div class="details">${item.detailDescription ? item.detailDescription[lang] : item.shortDescription[lang]}</div>
-             `;
-        projectListContainer.appendChild(projectDiv);
-    });
-    // При прокрутке обновляем активный элемент
-    projectListContainer.addEventListener('scroll', () => updateActiveItem(projectListContainer));
-    updateActiveItem(projectListContainer); // начальная проверка
+
 }
 
 // Функция для определения активного элемента в горизонтальном контейнере
@@ -77,12 +56,8 @@ async function loadData() {
         projectsData = await fetchJSON('data/projects.json');
         teamData = await fetchJSON('data/team.json');
         renderPage();
-
-        // Загружаем JSON с данными о команде
-        fetch("data/team.json")
-            .then((response) => response.json())
-            .then((data) => renderTeam(data, lang))
-            .catch((error) => console.error("Ошибка загрузки team.json:", error));
+        renderProjects(projectsData, lang)
+        renderTeam(teamData, lang)
 
     } catch (error) {
         console.error("Ошибка загрузки данных:", error);
