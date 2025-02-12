@@ -136,7 +136,9 @@ function setup() {
 // p5.js: функция draw — вызывается каждый кадр
 function draw() {
     time++;
-    background(0, 100 - opt.tail);
+    //background(50, 50, 50); // Тёмно-серый фон
+    background(50, 100);
+
     for (let p of Particles) {
         p.update();
         p.render();

@@ -8,12 +8,12 @@
   "items": [
     {
       "id": "1",
-      "name": { "ru": "Unity", "en": "Unity" },
+      "name": { "ru": "Программирование", "en": "Programming" },
       "detail": {
-        "ru": "Опыт разработки игр на Unity более 5 лет.",
-        "en": "Over 5 years of experience with Unity."
+        "ru": "",
+        "en": ""
       },
-      "connections": ["2", "3"]
+      "connections": ["2", "3", "4", "5"]
     },
     {
       "id": "2",
@@ -22,16 +22,61 @@
         "ru": "Эксперт в языке программирования C#.",
         "en": "Expert in C# programming."
       },
-      "connections": ["1"]
+      "connections": []
     },
     {
       "id": "3",
+      "name": { "ru": "C++", "en": "C++" },
+      "detail": {
+        "ru": "Эксперт в языке программирования C++.",
+        "en": "Expert in C++ programming."
+      },
+      "connections": []
+    },
+    {
+      "id": "4",
+      "name": { "ru": "Python", "en": "Python" },
+      "detail": {
+        "ru": "Эксперт в языке программирования Python.",
+        "en": "Expert in Python programming."
+      },
+      "connections": []
+    },
+    {
+      "id": "5",
+      "name": { "ru": "JavaScript", "en": "JavaScript" },
+      "detail": {
+        "ru": "Эксперт в языке программирования JavaScript.",
+        "en": "Expert in JavaScript programming."
+      },
+      "connections": []
+    },
+    {
+      "id": "10",
+      "name": { "ru": "Unity", "en": "Unity" },
+      "detail": {
+        "ru": "Опыт разработки игр на Unity более 5 лет.",
+        "en": "Over 5 years of experience with Unity."
+      },
+      "connections": ["2"]
+    },
+    {
+      "id": "11",
+      "name": { "ru": "Telegram MiniApps", "en": "Telegram MiniApps" },
+      "detail": {
+        "ru": "",
+        "en": ""
+      },
+      "connections": ["5"]
+    },
+    {
+      "id": "30",
       "name": { "ru": "Photoshop", "en": "Photoshop" },
       "detail": {
         "ru": "Уверенное владение инструментами Photoshop для создания графики.",
         "en": "Proficient with Photoshop for graphic design."
       },
-      "connections": ["1"]
+      "connections": []
     }
   ]
 }

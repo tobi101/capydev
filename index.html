@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <title>Аутсорс студия по разработке игр</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/TeamCards.css">
 </head>
 <body>
 <!-- p5.js canvas будет создан автоматически и размещён на фоне -->
 
 
 <header class="bg-success text-white py-4">
-    <div class="container d-flex align-items-center">
-        <img src="assets/images/logo.jpg" alt="Логотип компании" class="rounded-circle me-3" style="height: 100px; margin-left: 10px;">
-        <h1 class="m-0">CapyDev</h1>
-        <h1 id="site-title"></h1>
+
+    <div class="header-container">
+        <img src="assets/images/logo.jpg" alt="Logo" class="rounded-circle me-3" style="height: 75px; margin-left: 0px;">
+
+        <div class="logo">
+            <h1 id="site-title">Аутсорс Студия</h1>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="#projects" id="link-projects">Проекты</a></li>
+                <li><a href="#team" id="link-team">Команда</a></li>
+            </ul>
+        </nav>
     </div>
 </header>
-<nav>
-    <ul>
-        <li><a href="#projects" id="link-projects"></a></li>
-        <li><a href="#team" id="link-team"></a></li>
-        <li><a href="#skills" id="link-skills"></a></li>
-    </ul>
-</nav>
 
 <main>
     <!-- Раздел проектов -->
@@ -34,31 +39,40 @@
     </section>
 
     <!-- Раздел команды -->
-    <section id="team">
-        <h2></h2>
-        <div class="team-list">
-            <!-- Элементы команды будут подгружаться сюда -->
+    <section id="team" class="pb-5">
+        <div class="container">
+            <h5 class="section-title h1">OUR TEAM</h5>
+            <div class="row">
+
+
+            </div>
         </div>
     </section>
 
-    <!-- Раздел навыков -->
-    <section id="skills">
-        <h2></h2>
-        <div class="skills-list">
-            <!-- Узлы навыков и SVG-граф будут построены здесь -->
-        </div>
-    </section>
+
 </main>
 
 <footer>
-    <p>&copy; 2025 Аутсорс студия по разработке игр</p>
+    <!--<p>&copy; 2025 Аутсорс студия по разработке игр</p>-->
+
+    <div class="footer-container">
+        <p>&copy; 2025 Аутсорс студия по разработке игр. Все права защищены.</p>
+        <div class="footer-links">
+            <a href="mailto:contact@gameoutsourcing.com">contact@gameoutsourcing.com</a>
+            <a href="#contacts">Контакты</a>
+            <a href="#about">О нас</a>
+        </div>
+    </div>
 </footer>
 
 <!-- Подключаем p5.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
 <!-- Фоновая анимация -->
 <script src="src/background.js"></script>
+<!-- Подключаем teamCards.js -->
+<script src="src/teamCards.js"></script>
 <!-- Основной скрипт сайта -->
 <script src="src/main.js"></script>
+
 </body>
 </html>

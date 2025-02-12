@@ -1,0 +1,35 @@
+﻿/* Стили для футера */
+footer {
+    background: #222;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 3px solid #444;
+    margin-top: 40px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+footer p {
+    margin: 0 0 10px;
+    font-size: 16px;
+}
+
+.footer-links {
+    margin: 10px 0;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
