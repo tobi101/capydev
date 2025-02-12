@@ -17,7 +17,10 @@ let teamData = {};
 const lang = navigator.language.startsWith('en') ? 'en' : 'ru';
 
 function renderPage() {
-
+    // Отрисовываем контент
+    document.getElementById('site-title').textContent = contentData.siteTitle[lang];
+    document.getElementById('link-projects').textContent = contentData.nav.projects[lang];
+    document.getElementById('link-team').textContent = contentData.nav.team[lang];
 
 }
 
