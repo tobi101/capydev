@@ -9,12 +9,12 @@
     {
       "name": { "ru": "Иван Иванов", "en": "Ivan Ivanov" },
       "role": { "ru": "Главный разработчик", "en": "Lead Developer" },
-      "photo": "images/ivan.jpg"
+      "photo": "assets/images/profile1.png"
     },
     {
       "name": { "ru": "Петр Петров", "en": "Petr Petrov" },
       "role": { "ru": "Художник", "en": "Artist" },
-      "photo": "images/petr.jpg"
+      "photo": "assets/images/profile2.png"
     }
   ]
 }
