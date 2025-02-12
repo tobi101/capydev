@@ -7,7 +7,7 @@ function renderProjects(data, lang) {
     data.items.forEach((item, index) => {
 
         const card = document.createElement("div");
-        card.className = "project-card ";// + (index % 2 === 0 ? "slide-left" : "slide-right");
+        card.className = "project-card " + (index % 2 === 0 ? "slide-left" : "slide-right");
 
         const textDiv = document.createElement("div");
         textDiv.className = "project-text";
@@ -26,7 +26,7 @@ function renderProjects(data, lang) {
 
         projectsContainer.appendChild(card);
     });
-/*
+
     // Настраиваем IntersectionObserver для появления карточек при прокрутке
     const observerOptions = {
         root: null, // следим за областью viewport
@@ -46,5 +46,5 @@ function renderProjects(data, lang) {
     // Применяем observer ко всем карточкам
     document.querySelectorAll(".project-card").forEach(card => {
         observer.observe(card);
-    });*/
+    });
 }
