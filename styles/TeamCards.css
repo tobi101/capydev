@@ -1,0 +1,135 @@
+﻿/* Общий стиль секции команды */
+#team {
+    padding: 60px 0;
+    text-align: center;
+}
+
+/* Контейнер для карточек – увеличен gap между карточками */
+.team-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* увеличенный промежуток */
+}
+
+/* Карточка – фиксированная ширина и высота */
+.team-card {
+    width: 300px;
+    height: 400px;
+    perspective: 1000px; /* для 3D эффекта переворота */
+}
+
+/* Внутренний контейнер с эффектом переворота */
+.team-card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    transform-origin: center;  /* центральная точка вращения */
+    will-change: transform;     /* ускорение анимации */
+    /* Можно добавить translateZ(0) для избежания дрожания:
+       transform: translateZ(0);
+    */
+}
+
+/* Передняя и задняя стороны карточки */
+.team-card-front,
+.team-card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Передняя сторона */
+.team-card-front {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+}
+
+.team-card-front img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.team-card-front h4 {
+    margin: 10px 0;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.team-card-front p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.team-card-front .btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    background: #007b5e;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-radius: 5px;
+}
+
+.team-card-front .btn:hover {
+    background: #005a48;
+}
+
+/* Задняя сторона */
+.team-card-back {
+    background: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    transform: rotateY(180deg);
+}
+
+.team-card-back h4 {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.team-card-back p {
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+}
+
+.team-card-back .social-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.team-card-back .social-links a {
+    color: #007b5e;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.team-card-back .social-links a:hover {
+    color: #005a48;
+}
+
+/* Эффект переворота – при наведении внутренний контейнер поворачивается */
+.team-card:hover .team-card-inner {
+    transform: rotateY(180deg);
+}

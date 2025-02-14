@@ -1,0 +1,42 @@
+﻿{
+  "localization": {
+    "sectionTitle": {
+      "ru": "Команда",
+      "en": "Team"
+    }
+  },
+  "items": [
+    {
+      "name": { "ru": "Иван Иванов", "en": "Ivan Ivanov" },
+      "role": { "ru": "Главный разработчик", "en": "Lead Developer" },
+      "photo": "assets/images/profile1.png",
+      "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
+      "detailDescription": {
+        "ru": "Подробное описание участника команды. Опыт, навыки и достижения.",
+        "en": "Detailed description about team member. Experience, skills, and achievements."
+      },
+      "social": {
+        "facebook": "http://facebook.com/ivan",
+        "twitter": "http://twitter.com/ivan",
+        "skype": "http://skype.com/ivan",
+        "google": "http://google.com/ivan"
+      }
+      },
+    {
+      "name": { "ru": "Петр Петров", "en": "Petr Petrov" },
+      "role": { "ru": "Художник", "en": "Artist" },
+      "photo": "assets/images/profile2.png",
+      "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
+      "detailDescription": {
+        "ru": "Подробное описание участника команды. Информация о художественном опыте, стилях и проектах.",
+        "en": "Detailed description about team member. Info about art experience, styles and projects."
+      },
+      "social": {
+        "facebook": "http://facebook.com/petr",
+        "twitter": "http://twitter.com/petr",
+        "skype": "http://skype.com/petr",
+        "google": "http://google.com/petr"
+      }
+    }
+  ]
+}

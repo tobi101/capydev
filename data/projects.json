@@ -1,0 +1,34 @@
+﻿{
+  "localization": {
+    "sectionTitle": {
+      "ru": "Проекты",
+      "en": "Projects"
+    }
+  },
+  "items": [
+    {
+      "title": { "ru": "Игра 1", "en": "Game 1" },
+      "shortDescription": {
+        "ru": "Краткое описание игры 1.",
+        "en": "Short description of Game 1."
+      },
+      "previewImage": "assets/images/example1.jpg"
+    },
+    {
+      "title": { "ru": "Игра 2", "en": "Game 2" },
+      "shortDescription": {
+        "ru": "Краткое описание игры 2.",
+        "en": "Short description of Game 2."
+      },
+      "previewImage": "assets/images/example2.jpg"
+    },
+    {
+      "title": { "ru": "Игра 3", "en": "Game 3" },
+      "shortDescription": {
+        "ru": "Краткое описание игры 3.",
+        "en": "Short description of Game 3."
+      },
+      "previewImage": "assets/images/example3.jpg"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+﻿{
+  "siteTitle": {
+    "ru": "Аутсорс студия по разработке игр",
+    "en": "Game Development Outsourcing Studio"
+  },
+  "nav": {
+    "projects": { "ru": "Проекты", "en": "Projects" },
+    "team": { "ru": "Команда", "en": "Team" },
+    "skills": { "ru": "Навыки", "en": "Skills" }
+  }
+
+}
