@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Аутсорс студия по разработке игр</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CapyDev Studio - Разработка игр</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/header.css">
@@ -12,27 +13,69 @@
 <body>
 <!-- p5.js canvas будет создан автоматически и размещён на фоне -->
 
-
-<header class="bg-success text-white py-4">
-
+<header class="header">
     <div class="header-container">
-        <img src="assets/images/logo.jpg" alt="Logo" class="rounded-circle me-3" style="height: 75px; margin-left: 0px;">
-
+        <img src="assets/images/logo.jpg" alt="Logo" class="logo-img">
         <div class="logo">
-            <h1 id="site-title">Аутсорс Студия</h1>
+            <h1 id="site-title">CapyDev Studio</h1>
         </div>
         <nav class="header-nav">
             <ul>
+                <li><a href="#about" id="link-about">О нас</a></li>
+                <li><a href="#services" id="link-services">Услуги</a></li>
                 <li><a href="#projects" id="link-projects">Проекты</a></li>
+                <li><a href="#workflow" id="link-workflow">Процесс</a></li>
                 <li><a href="#team" id="link-team">Команда</a></li>
+                <li><a href="#contacts" id="link-contacts">Контакты</a></li>
             </ul>
         </nav>
+        <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
 </header>
 
 <main>
-    <!-- Раздел проектов -->
-    <section id="projects">
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 id="hero-title" class="hero-title">Профессиональная разработка игр</h1>
+                <p id="hero-subtitle" class="hero-subtitle">Создаем увлекательные игры любой сложности от концепции до релиза</p>
+                <button id="hero-cta" class="cta-button">Обсудить проект</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title" id="about-title">О нас</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p id="about-description">CapyDev - это команда опытных разработчиков игр, специализирующихся на создании качественных проектов для различных платформ.</p>
+                </div>
+                <div class="about-stats" id="about-stats">
+                    <!-- Статистика будет загружена через JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2 class="section-title" id="services-title">Наши услуги</h2>
+            <div class="services-grid" id="services-container">
+                <!-- Услуги будут загружены через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
         <div class="container">
             <h2 class="section-title">Наши проекты</h2>
             <div id="projects-container">
@@ -41,17 +84,44 @@
         </div>
     </section>
 
-    <!-- Раздел команды -->
-    <section id="team">
+    <!-- Workflow Section -->
+    <section id="workflow" class="workflow-section">
         <div class="container">
-            <h5 class="section-title">НАША КОМАНДА</h5>
+            <h2 class="section-title" id="workflow-title">Процесс работы</h2>
+            <div class="workflow-steps" id="workflow-container">
+                <!-- Этапы работы будут загружены через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+        <div class="container">
+            <h2 class="section-title">НАША КОМАНДА</h2>
             <div class="team-row" id="team-container">
                 <!-- Карточки генерируются через JS -->
             </div>
         </div>
     </section>
 
-
+    <!-- Contacts Section -->
+    <section id="contacts" class="contacts-section">
+        <div class="container">
+            <h2 class="section-title" id="contacts-title">Свяжитесь с нами</h2>
+            <div class="contacts-content">
+                <div class="contact-info" id="contact-info">
+                    <!-- Контактная информация будет загружена через JS -->
+                </div>
+                <div class="contact-form-container">
+                    <h3 id="form-title">Обсудить проект</h3>
+                    <p id="form-subtitle">Расскажите о вашей идее, и мы поможем воплотить её в жизнь</p>
+                    <form id="contact-form" class="contact-form">
+                        <!-- Форма будет генерироваться через JS -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
 <footer>
@@ -67,10 +137,29 @@
     </div>
 </footer>
 
+<!-- Back to top button -->
+<button id="backToTop" class="back-to-top" aria-label="Наверх">↑</button>
+
+<!-- Project Modal -->
+<div id="projectModal" class="modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-body">
+            <!-- Содержимое модального окна будет загружено через JS -->
+        </div>
+    </div>
+</div>
+
 <!-- Подключаем p5.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
 <!-- Фоновая анимация -->
 <script src="src/background.js"></script>
+<!-- Подключаем новые модули -->
+<script src="src/services.js"></script>
+<script src="src/workflow.js"></script>
+<script src="src/contacts.js"></script>
+<script src="src/animations.js"></script>
 <!-- Подключаем teamCards.js -->
 <script src="src/teamCards.js"></script>
 <!-- Подключаем projects.js -->

@@ -1,4 +1,4 @@
-﻿// teamCards.js
+// teamCards.js
 
 /**
  * Функция генерирует HTML-разметку карточек команды на основе данных и языка.
@@ -7,47 +7,99 @@
  */
 function renderTeam(data, lang) {
     const teamContainer = document.getElementById("team-container");
+    if (!teamContainer) return;
 
-    // Очищаем контейнер перед рендерингом (на случай обновления)
+    // Очищаем контейнер перед рендерингом
     teamContainer.innerHTML = "";
 
-    data.items.forEach((member) => {
+    data.items.forEach((member, index) => {
         // Карточка команды
         const teamCard = document.createElement("div");
-        teamCard.className = "team-card";
+        teamCard.className = "team-member";
+        teamCard.dataset.index = index;
 
-        // Внутренний контейнер для переворота
-        const teamCardInner = document.createElement("div");
-        teamCardInner.className = "team-card-inner";
+        // Фото участника
+        const photoDiv = document.createElement("div");
+        photoDiv.className = "member-photo";
+        const img = document.createElement("img");
+        img.src = member.photo;
+        img.alt = member.name[lang];
+        photoDiv.appendChild(img);
 
-        // Передняя сторона
-        const front = document.createElement("div");
-        front.className = "team-card-front";
-        front.innerHTML = `
-      <img src="${member.photo}" alt="${member.name[lang]}">
-      <h4>${member.name[lang]}</h4>
-      <p>${member.role[lang]}</p>
-      <button class="btn">Подробнее</button>
-    `;
+        // Информация о участнике
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "member-info";
+        
+        const name = document.createElement("h4");
+        name.textContent = member.name[lang];
+        
+        const role = document.createElement("div");
+        role.className = "member-role";
+        role.textContent = member.role[lang];
+        
+        const description = document.createElement("div");
+        description.className = "member-description";
+        description.textContent = member.detailDescription[lang];
 
-        // Задняя сторона
-        const back = document.createElement("div");
-        back.className = "team-card-back";
-        back.innerHTML = `
-      <h4>${member.name[lang]}</h4>
-      <p>${member.detailDescription[lang]}</p>
-      <div class="social-links">
-        ${member.social.facebook ? `<a href="${member.social.facebook}" target="_blank"><i class="fa fa-facebook"></i></a>` : ""}
-        ${member.social.twitter ? `<a href="${member.social.twitter}" target="_blank"><i class="fa fa-twitter"></i></a>` : ""}
-        ${member.social.skype ? `<a href="${member.social.skype}" target="_blank"><i class="fa fa-skype"></i></a>` : ""}
-        ${member.social.google ? `<a href="${member.social.google}" target="_blank"><i class="fa fa-google"></i></a>` : ""}
-      </div>
-    `;
+        infoDiv.appendChild(name);
+        infoDiv.appendChild(role);
+        infoDiv.appendChild(description);
+
+        // Навыки (если есть)
+        if (member.skills && member.skills.length > 0) {
+            const skillsDiv = document.createElement("div");
+            skillsDiv.className = "member-skills";
+            
+            member.skills.forEach(skill => {
+                const skillTag = document.createElement("span");
+                skillTag.className = "skill-tag";
+                skillTag.textContent = skill;
+                skillsDiv.appendChild(skillTag);
+            });
+            
+            infoDiv.appendChild(skillsDiv);
+        }
+
+        // Социальные сети
+        const socialDiv = document.createElement("div");
+        socialDiv.className = "member-social";
+        
+        const socialLinks = [
+            { platform: 'github', icon: '🔗', url: member.social?.github },
+            { platform: 'linkedin', icon: '💼', url: member.social?.linkedin },
+            { platform: 'telegram', icon: '💬', url: member.social?.telegram },
+            { platform: 'email', icon: '📧', url: member.social?.email ? `mailto:${member.social.email}` : null }
+        ];
+
+        socialLinks.forEach(social => {
+            if (social.url) {
+                const link = document.createElement("a");
+                link.className = "social-link";
+                link.href = social.url;
+                link.target = "_blank";
+                link.textContent = social.icon;
+                link.title = social.platform;
+                socialDiv.appendChild(link);
+            }
+        });
+
+        // Кнопка связаться
+        const contactBtn = document.createElement("button");
+        contactBtn.className = "contact-member-btn";
+        contactBtn.textContent = lang === 'ru' ? 'Связаться' : 'Contact';
+        contactBtn.addEventListener('click', () => {
+            if (member.social?.email) {
+                window.open(`mailto:${member.social.email}`, '_blank');
+            } else if (member.social?.telegram) {
+                window.open(member.social.telegram, '_blank');
+            }
+        });
 
         // Собираем карточку
-        teamCardInner.appendChild(front);
-        teamCardInner.appendChild(back);
-        teamCard.appendChild(teamCardInner);
+        teamCard.appendChild(photoDiv);
+        teamCard.appendChild(infoDiv);
+        teamCard.appendChild(socialDiv);
+        teamCard.appendChild(contactBtn);
         teamContainer.appendChild(teamCard);
     });
 }

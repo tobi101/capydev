@@ -1,0 +1,62 @@
+{
+  "localization": {
+    "sectionTitle": {
+      "ru": "Наши услуги",
+      "en": "Our Services"
+    }
+  },
+  "items": [
+    {
+      "icon": "🎮",
+      "title": { "ru": "Разработка игр", "en": "Game Development" },
+      "description": {
+        "ru": "Полный цикл разработки игр от концепции до релиза на всех популярных платформах",
+        "en": "Full cycle game development from concept to release on all popular platforms"
+      },
+      "features": [
+        { "ru": "Unity, Unreal Engine", "en": "Unity, Unreal Engine" },
+        { "ru": "Мобильные платформы", "en": "Mobile platforms" },
+        { "ru": "PC/Console игры", "en": "PC/Console games" }
+      ]
+    },
+    {
+      "icon": "🎨",
+      "title": { "ru": "Геймдизайн", "en": "Game Design" },
+      "description": {
+        "ru": "Создание увлекательного геймплея, балансировка и проектирование игровых механик",
+        "en": "Creating engaging gameplay, balancing and designing game mechanics"
+      },
+      "features": [
+        { "ru": "Документация игры", "en": "Game documentation" },
+        { "ru": "Прототипирование", "en": "Prototyping" },
+        { "ru": "Балансировка", "en": "Balancing" }
+      ]
+    },
+    {
+      "icon": "🎯",
+      "title": { "ru": "Портирование", "en": "Game Porting" },
+      "description": {
+        "ru": "Адаптация существующих игр для новых платформ с оптимизацией производительности",
+        "en": "Adapting existing games for new platforms with performance optimization"
+      },
+      "features": [
+        { "ru": "Кроссплатформенность", "en": "Cross-platform" },
+        { "ru": "Оптимизация", "en": "Optimization" },
+        { "ru": "Тестирование", "en": "Testing" }
+      ]
+    },
+    {
+      "icon": "🔧",
+      "title": { "ru": "Техническое сопровождение", "en": "Technical Support" },
+      "description": {
+        "ru": "Поддержка и обновление игр после релиза, исправление багов и добавление контента",
+        "en": "Post-release game support and updates, bug fixes and content additions"
+      },
+      "features": [
+        { "ru": "Исправление багов", "en": "Bug fixing" },
+        { "ru": "Обновления", "en": "Updates" },
+        { "ru": "Новый контент", "en": "New content" }
+      ]
+    }
+  ]
+}

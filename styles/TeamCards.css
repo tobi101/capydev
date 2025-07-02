@@ -1,135 +1,251 @@
-﻿/* Общий стиль секции команды */
-#team {
-    padding: 60px 0;
-    text-align: center;
-}
-
-/* Контейнер для карточек – увеличен gap между карточками */
+/* Team Section Styles */
 .team-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px; /* увеличенный промежуток */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
 }
 
-/* Карточка – фиксированная ширина и высота */
-.team-card {
-    width: 300px;
-    height: 400px;
-    perspective: 1000px; /* для 3D эффекта переворота */
-}
-
-/* Внутренний контейнер с эффектом переворота */
-.team-card-inner {
-    width: 100%;
-    height: 100%;
+/* Team Member Card */
+.team-member {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.4s ease;
     position: relative;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    transform-origin: center;  /* центральная точка вращения */
-    will-change: transform;     /* ускорение анимации */
-    /* Можно добавить translateZ(0) для избежания дрожания:
-       transform: translateZ(0);
-    */
-}
-
-/* Передняя и задняя стороны карточки */
-.team-card-front,
-.team-card-back {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(50px);
 }
 
-/* Передняя сторона */
-.team-card-front {
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
+section.visible .team-member {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.team-card-front img {
+.team-member:nth-child(1) { transition-delay: 0.1s; }
+.team-member:nth-child(2) { transition-delay: 0.2s; }
+.team-member:nth-child(3) { transition-delay: 0.3s; }
+.team-member:nth-child(4) { transition-delay: 0.4s; }
+
+.team-member:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(76, 175, 80, 0.5);
+    box-shadow: 0 20px 40px rgba(76, 175, 80, 0.2);
+}
+
+/* Member Photo */
+.member-photo {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    margin-bottom: 15px;
+    margin: 0 auto 20px;
+    position: relative;
+    overflow: hidden;
+    border: 3px solid rgba(76, 175, 80, 0.3);
+    transition: all 0.3s ease;
+}
+
+.team-member:hover .member-photo {
+    border-color: #4CAF50;
+    transform: scale(1.05);
+}
+
+.member-photo img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-.team-card-front h4 {
-    margin: 10px 0;
-    font-size: 1.3rem;
-    color: #333;
+.team-member:hover .member-photo img {
+    transform: scale(1.1);
 }
 
-.team-card-front p {
+/* Member Info */
+.member-info h4 {
+    color: #4CAF50;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.member-role {
+    color: #ccc;
     font-size: 1rem;
-    color: #555;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
 }
 
-.team-card-front .btn {
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-size: 14px;
-    background: #007b5e;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-    border-radius: 5px;
+.member-description {
+    color: #bbb;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease 0.1s;
 }
 
-.team-card-front .btn:hover {
-    background: #005a48;
+.team-member:hover .member-description {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Задняя сторона */
-.team-card-back {
-    background: #f8f8f8;
+/* Skills Tags */
+.member-skills {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease 0.2s;
+}
+
+.team-member:hover .member-skills {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.skill-tag {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+    background: rgba(76, 175, 80, 0.3);
+    transform: scale(1.05);
+}
+
+/* Social Links */
+.member-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease 0.3s;
+}
+
+.team-member:hover .member-social {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.social-link {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0px;
-    transform: rotateY(180deg);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
-.team-card-back h4 {
-    margin-bottom: 10px;
-    font-size: 1.3rem;
-    color: #333;
+.social-link:hover {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
 }
 
-.team-card-back p {
-    font-size: 0.9rem;
-    color: #555;
-    text-align: center;
-}
-
-.team-card-back .social-links {
-    display: flex;
-    gap: 10px;
+/* Contact Button */
+.contact-member-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
     margin-top: 15px;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
-.team-card-back .social-links a {
-    color: #007b5e;
-    font-size: 20px;
-    transition: color 0.3s;
+.team-member:hover .contact-member-btn {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease 0.4s;
 }
 
-.team-card-back .social-links a:hover {
-    color: #005a48;
+.contact-member-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
 }
 
-/* Эффект переворота – при наведении внутренний контейнер поворачивается */
-.team-card:hover .team-card-inner {
-    transform: rotateY(180deg);
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .team-row {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .team-member {
+        padding: 25px 20px;
+    }
+    
+    .member-photo {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+    
+    .member-info h4 {
+        font-size: 1.2rem;
+    }
+    
+    .member-role {
+        font-size: 0.9rem;
+    }
+    
+    .member-description {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-member {
+        padding: 20px 15px;
+    }
+    
+    .member-photo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .member-skills {
+        gap: 6px;
+    }
+    
+    .skill-tag {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
 }

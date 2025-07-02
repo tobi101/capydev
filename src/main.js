@@ -12,6 +12,9 @@ async function fetchJSON(url) {
 let contentData = {};
 let projectsData = {};
 let teamData = {};
+let servicesData = {};
+let workflowData = {};
+let contactsData = {};
 
 // Определяем язык (по умолчанию русский)
 const lang = navigator.language.startsWith('en') ? 'en' : 'ru';
@@ -19,14 +22,55 @@ const lang = navigator.language.startsWith('en') ? 'en' : 'ru';
 function renderPage() {
     // Отрисовываем контент
     document.getElementById('site-title').textContent = contentData.siteTitle[lang];
-    document.getElementById('link-projects').textContent = contentData.nav.projects[lang];
-    document.getElementById('link-team').textContent = contentData.nav.team[lang];
+    
+    // Обновляем навигацию
+    const navLinks = {
+        'link-about': contentData.nav.about[lang],
+        'link-services': contentData.nav.services[lang],
+        'link-projects': contentData.nav.projects[lang],
+        'link-workflow': contentData.nav.workflow[lang],
+        'link-team': contentData.nav.team[lang],
+        'link-contacts': contentData.nav.contacts[lang]
+    };
 
+    Object.entries(navLinks).forEach(([id, text]) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = text;
+    });
+
+    // Обновляем hero секцию
+    const heroTitle = document.getElementById('hero-title');
+    const heroSubtitle = document.getElementById('hero-subtitle');
+    const heroCta = document.getElementById('hero-cta');
+    
+    if (heroTitle) heroTitle.textContent = contentData.hero.title[lang];
+    if (heroSubtitle) heroSubtitle.textContent = contentData.hero.subtitle[lang];
+    if (heroCta) heroCta.textContent = contentData.hero.cta[lang];
+
+    // Обновляем about секцию
+    const aboutTitle = document.getElementById('about-title');
+    const aboutDescription = document.getElementById('about-description');
+    const aboutStats = document.getElementById('about-stats');
+    
+    if (aboutTitle) aboutTitle.textContent = contentData.about.title[lang];
+    if (aboutDescription) aboutDescription.textContent = contentData.about.description[lang];
+    
+    if (aboutStats) {
+        aboutStats.innerHTML = '';
+        contentData.about.stats.forEach(stat => {
+            const statElement = document.createElement('div');
+            statElement.className = 'stat-item';
+            statElement.innerHTML = `
+                <span class="stat-number">${stat.number}</span>
+                <span class="stat-label">${stat.label[lang]}</span>
+            `;
+            aboutStats.appendChild(statElement);
+        });
+    }
 }
 
 // Функция для определения активного элемента в горизонтальном контейнере
 function updateActiveItem(container) {
-    // Отбираем только элементы проектов или команды (без SVG и т.п.)
     const children = Array.from(container.children).filter(child =>
         child.classList.contains('project-item') || child.classList.contains('team-member')
     );
@@ -52,20 +96,36 @@ function updateActiveItem(container) {
 
 async function loadData() {
     try {
-        // Определяем язык пользователя (например, ru или en)
         const lang = navigator.language.startsWith("en") ? "en" : "ru";
 
-        contentData = await fetchJSON('data/content.json');
-        projectsData = await fetchJSON('data/projects.json');
-        teamData = await fetchJSON('data/team.json');
+        // Загружаем все данные параллельно
+        const [content, projects, team, services, workflow, contacts] = await Promise.all([
+            fetchJSON('data/content.json'),
+            fetchJSON('data/projects.json'),
+            fetchJSON('data/team.json'),
+            fetchJSON('data/services.json'),
+            fetchJSON('data/workflow.json'),
+            fetchJSON('data/contacts.json')
+        ]);
+
+        contentData = content;
+        projectsData = projects;
+        teamData = team;
+        servicesData = services;
+        workflowData = workflow;
+        contactsData = contacts;
+
+        // Отрисовываем все секции
         renderPage();
-        renderProjects(projectsData, lang)
-        renderTeam(teamData, lang)
+        renderServices(servicesData, lang);
+        renderWorkflow(workflowData, lang);
+        renderProjects(projectsData, lang);
+        renderTeam(teamData, lang);
+        renderContacts(contactsData, lang);
 
     } catch (error) {
         console.error("Ошибка загрузки данных:", error);
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', loadData);

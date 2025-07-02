@@ -1,0 +1,88 @@
+{
+  "localization": {
+    "sectionTitle": {
+      "ru": "Свяжитесь с нами",
+      "en": "Contact Us"
+    },
+    "formTitle": {
+      "ru": "Обсудить проект",
+      "en": "Discuss Your Project"
+    },
+    "formSubtitle": {
+      "ru": "Расскажите о вашей идее, и мы поможем воплотить её в жизнь",
+      "en": "Tell us about your idea and we'll help bring it to life"
+    }
+  },
+  "contactInfo": [
+    {
+      "type": "email",
+      "icon": "📧",
+      "label": { "ru": "Email", "en": "Email" },
+      "value": "hello@capydev.studio",
+      "link": "mailto:hello@capydev.studio"
+    },
+    {
+      "type": "telegram",
+      "icon": "💬",
+      "label": { "ru": "Telegram", "en": "Telegram" },
+      "value": "@capydev_studio",
+      "link": "https://t.me/capydev_studio"
+    },
+    {
+      "type": "discord",
+      "icon": "🎮",
+      "label": { "ru": "Discord", "en": "Discord" },
+      "value": "CapyDev#1234",
+      "link": "#"
+    }
+  ],
+  "form": {
+    "fields": [
+      {
+        "name": "name",
+        "type": "text",
+        "label": { "ru": "Ваше имя", "en": "Your Name" },
+        "placeholder": { "ru": "Введите ваше имя", "en": "Enter your name" },
+        "required": true
+      },
+      {
+        "name": "email",
+        "type": "email",
+        "label": { "ru": "Email", "en": "Email" },
+        "placeholder": { "ru": "your@email.com", "en": "your@email.com" },
+        "required": true
+      },
+      {
+        "name": "project_type",
+        "type": "select",
+        "label": { "ru": "Тип проекта", "en": "Project Type" },
+        "options": [
+          { "value": "mobile", "label": { "ru": "Мобильная игра", "en": "Mobile Game" } },
+          { "value": "pc", "label": { "ru": "PC игра", "en": "PC Game" } },
+          { "value": "console", "label": { "ru": "Консольная игра", "en": "Console Game" } },
+          { "value": "porting", "label": { "ru": "Портирование", "en": "Game Porting" } },
+          { "value": "support", "label": { "ru": "Техподдержка", "en": "Technical Support" } }
+        ]
+      },
+      {
+        "name": "budget",
+        "type": "select",
+        "label": { "ru": "Бюджет", "en": "Budget" },
+        "options": [
+          { "value": "5k-15k", "label": { "ru": "$5k - $15k", "en": "$5k - $15k" } },
+          { "value": "15k-50k", "label": { "ru": "$15k - $50k", "en": "$15k - $50k" } },
+          { "value": "50k+", "label": { "ru": "$50k+", "en": "$50k+" } },
+          { "value": "discuss", "label": { "ru": "Обсудим", "en": "Let's discuss" } }
+        ]
+      },
+      {
+        "name": "message",
+        "type": "textarea",
+        "label": { "ru": "Описание проекта", "en": "Project Description" },
+        "placeholder": { "ru": "Расскажите подробнее о вашем проекте...", "en": "Tell us more about your project..." },
+        "required": true
+      }
+    ],
+    "submitButton": { "ru": "Отправить", "en": "Send Message" }
+  }
+}
