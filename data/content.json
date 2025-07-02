@@ -1,12 +1,52 @@
 ﻿{
   "siteTitle": {
-    "ru": "Аутсорс студия по разработке игр",
-    "en": "Game Development Outsourcing Studio"
+    "ru": "CapyDev Studio",
+    "en": "CapyDev Studio"
   },
   "nav": {
+    "about": { "ru": "О нас", "en": "About" },
+    "services": { "ru": "Услуги", "en": "Services" },
     "projects": { "ru": "Проекты", "en": "Projects" },
+    "workflow": { "ru": "Процесс", "en": "Workflow" },
     "team": { "ru": "Команда", "en": "Team" },
-    "skills": { "ru": "Навыки", "en": "Skills" }
+    "contacts": { "ru": "Контакты", "en": "Contacts" }
+  },
+  "hero": {
+    "title": {
+      "ru": "Профессиональная разработка игр",
+      "en": "Professional Game Development"
+    },
+    "subtitle": {
+      "ru": "Создаем увлекательные игры любой сложности от концепции до релиза",
+      "en": "Creating engaging games of any complexity from concept to release"
+    },
+    "cta": {
+      "ru": "Обсудить проект",
+      "en": "Discuss Project"
+    }
+  },
+  "about": {
+    "title": {
+      "ru": "О нас",
+      "en": "About Us"
+    },
+    "description": {
+      "ru": "CapyDev - это команда опытных разработчиков игр, специализирующихся на создании качественных проектов для различных платформ. Мы объединяем креативность и технические навыки для воплощения ваших идей в жизнь.",
+      "en": "CapyDev is a team of experienced game developers specializing in creating quality projects for various platforms. We combine creativity and technical skills to bring your ideas to life."
+    },
+    "stats": [
+      {
+        "number": "50+",
+        "label": { "ru": "Завершенных проектов", "en": "Completed Projects" }
+      },
+      {
+        "number": "5+",
+        "label": { "ru": "Лет опыта", "en": "Years of Experience" }
+      },
+      {
+        "number": "15+",
+        "label": { "ru": "Довольных клиентов", "en": "Happy Clients" }
+      }
+    ]
   }
-
 }

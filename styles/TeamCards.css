@@ -1,135 +1,259 @@
-﻿/* Общий стиль секции команды */
-#team {
-    padding: 60px 0;
-    text-align: center;
+/* Team Section Styles */
+.team-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
 }
 
-/* Контейнер для карточек – увеличен gap между карточками */
-.team-row {
+/* Team Member Card */
+.team-member {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+    /* --- Новые стили для flex-верстки и высоты --- */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 400px; /* Фиксированная высота карточки */
+    padding: 0; /* Убираем внутренние отступы */
+}
+
+section.visible .team-member {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.team-member:nth-child(1) { transition-delay: 0.1s; }
+.team-member:nth-child(2) { transition-delay: 0.2s; }
+.team-member:nth-child(3) { transition-delay: 0.3s; }
+.team-member:nth-child(4) { transition-delay: 0.4s; }
+
+.team-member:hover {
+    transform: translateY(-10px); /* Оставляем эффект "подъема" */
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(76, 175, 80, 0.5);
+    box-shadow: 0 20px 40px rgba(76, 175, 80, 0.2);
+}
+
+/* --- Стили для фото --- */
+.member-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75%; /* Занимает большую часть высоты */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* --- Оставляем только анимацию transform --- */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+
+.member-photo img {
+    /* --- Увеличиваем фото и радиус --- */
+    width: 260px;
+    height: 260px;
+    border-radius: 100px; /* Увеличенный радиус для эффекта "суперэллипса" */
+    object-fit: cover;
+    border: 3px solid rgba(76, 175, 80, 0.3);
+    transition: all 0.4s ease;
+    background: #1a1a1a;
+}
+
+.team-member:hover .member-photo {
+    /* --- Корректируем сдвиг и масштаб --- */
+    transform: translateY(-25%) scale(0.5); /* Уменьшается и сдвигается вверх */
+}
+
+.team-member:hover .member-photo img {
+    border-color: #4CAF50;
+}
+
+/* --- Новый контейнер для контента --- */
+.member-content {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    /* --- УБИРАЕМ АНИМАЦИЮ, ЧТОБЫ ИЗБЕЖАТЬ РЫВКА --- */
+    transition: none;
+}
+
+.team-member:hover .member-content {
+    /* --- УБИРАЕМ СДВИГ --- */
+    transform: none;
+}
+
+/* --- Блок с именем и ролью --- */
+.member-info {
+    /* --- УБИРАЕМ АНИМАЦИЮ, ДВИЖЕНИЕ БУДЕТ ЕСТЕСТВЕННЫМ --- */
+    transition: none;
+}
+
+.member-info h4 {
+    color: #4CAF50;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.member-role {
+    color: #ccc;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+/* --- Новый контейнер для скрытых деталей --- */
+.member-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    /* --- Делаем анимацию появления плавной --- */
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out 0.1s;
+}
+
+.team-member:hover .member-details {
+    max-height: 300px; /* Достаточная высота для всего контента */
+    opacity: 1;
+}
+
+.member-description {
+    color: #bbb;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Skills Tags */
+.member-skills {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px; /* увеличенный промежуток */
-}
-
-/* Карточка – фиксированная ширина и высота */
-.team-card {
-    width: 300px;
-    height: 400px;
-    perspective: 1000px; /* для 3D эффекта переворота */
-}
-
-/* Внутренний контейнер с эффектом переворота */
-.team-card-inner {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    transform-origin: center;  /* центральная точка вращения */
-    will-change: transform;     /* ускорение анимации */
-    /* Можно добавить translateZ(0) для избежания дрожания:
-       transform: translateZ(0);
-    */
-}
-
-/* Передняя и задняя стороны карточки */
-.team-card-front,
-.team-card-back {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Передняя сторона */
-.team-card-front {
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
-}
-
-.team-card-front img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    gap: 8px;
     margin-bottom: 15px;
-    object-fit: cover;
 }
 
-.team-card-front h4 {
-    margin: 10px 0;
-    font-size: 1.3rem;
-    color: #333;
+.skill-tag {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    transition: all 0.3s ease;
 }
 
-.team-card-front p {
-    font-size: 1rem;
-    color: #555;
+.skill-tag:hover {
+    background: rgba(76, 175, 80, 0.3);
+    transform: scale(1.05);
 }
 
-.team-card-front .btn {
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-size: 14px;
-    background: #007b5e;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-    border-radius: 5px;
-}
-
-.team-card-front .btn:hover {
-    background: #005a48;
-}
-
-/* Задняя сторона */
-.team-card-back {
-    background: #f8f8f8;
+/* Social Links */
+.member-social {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.social-link {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0px;
-    transform: rotateY(180deg);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
-.team-card-back h4 {
-    margin-bottom: 10px;
-    font-size: 1.3rem;
-    color: #333;
+.social-link:hover {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
 }
 
-.team-card-back p {
-    font-size: 0.9rem;
-    color: #555;
-    text-align: center;
+/* Contact Button */
+.contact-member-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    margin-top: 15px; /* Добавляем отступ сверху для отделения от соц. иконок */
 }
 
-.team-card-back .social-links {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
+.contact-member-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
 }
 
-.team-card-back .social-links a {
-    color: #007b5e;
-    font-size: 20px;
-    transition: color 0.3s;
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .team-row {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .team-member {
+        height: 420px; /* Адаптивная высота */
+    }
+    
+    .member-photo img {
+        /* --- Увеличиваем размер для планшетов --- */
+        width: 200px;
+        height: 200px;
+        border-radius: 75px;
+    }
 }
 
-.team-card-back .social-links a:hover {
-    color: #005a48;
-}
-
-/* Эффект переворота – при наведении внутренний контейнер поворачивается */
-.team-card:hover .team-card-inner {
-    transform: rotateY(180deg);
+@media (max-width: 480px) {
+    .team-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-member {
+        height: 400px; /* Адаптивная высота */
+    }
+    
+    .member-photo img {
+        /* --- Увеличиваем размер для мобильных --- */
+        width: 180px;
+        height: 180px;
+        border-radius: 60px;
+    }
+    
+    .member-skills {
+        gap: 6px;
+    }
+    
+    .skill-tag {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
 }
