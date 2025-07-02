@@ -26,7 +26,11 @@ function renderTeam(data, lang) {
         img.alt = member.name[lang];
         photoDiv.appendChild(img);
 
-        // Информация о участнике
+        // --- Новый контейнер для всего контента ---
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "member-content";
+
+        // Информация о участнике (имя, роль)
         const infoDiv = document.createElement("div");
         infoDiv.className = "member-info";
         
@@ -36,14 +40,18 @@ function renderTeam(data, lang) {
         const role = document.createElement("div");
         role.className = "member-role";
         role.textContent = member.role[lang];
-        
-        const description = document.createElement("div");
-        description.className = "member-description";
-        description.textContent = member.detailDescription[lang];
 
         infoDiv.appendChild(name);
         infoDiv.appendChild(role);
-        infoDiv.appendChild(description);
+
+        // --- Новый контейнер для скрытых деталей ---
+        const detailsDiv = document.createElement("div");
+        detailsDiv.className = "member-details";
+
+        const description = document.createElement("div");
+        description.className = "member-description";
+        description.textContent = member.detailDescription[lang];
+        detailsDiv.appendChild(description);
 
         // Навыки (если есть)
         if (member.skills && member.skills.length > 0) {
@@ -57,7 +65,7 @@ function renderTeam(data, lang) {
                 skillsDiv.appendChild(skillTag);
             });
             
-            infoDiv.appendChild(skillsDiv);
+            detailsDiv.appendChild(skillsDiv);
         }
 
         // Социальные сети
@@ -82,6 +90,7 @@ function renderTeam(data, lang) {
                 socialDiv.appendChild(link);
             }
         });
+        detailsDiv.appendChild(socialDiv);
 
         // Кнопка связаться
         const contactBtn = document.createElement("button");
@@ -94,12 +103,14 @@ function renderTeam(data, lang) {
                 window.open(member.social.telegram, '_blank');
             }
         });
+        detailsDiv.appendChild(contactBtn);
 
         // Собираем карточку
+        contentDiv.appendChild(infoDiv);
+        contentDiv.appendChild(detailsDiv);
+
         teamCard.appendChild(photoDiv);
-        teamCard.appendChild(infoDiv);
-        teamCard.appendChild(socialDiv);
-        teamCard.appendChild(contactBtn);
+        teamCard.appendChild(contentDiv);
         teamContainer.appendChild(teamCard);
     });
 }
