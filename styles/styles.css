@@ -444,6 +444,19 @@ section.visible .workflow-step:nth-child(even) {
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
 }
 
+.form-group select option {
+    background: #2a2a2a;
+    color: #eee;
+    padding: 10px;
+    border: none;
+}
+
+.form-group select option:hover,
+.form-group select option:focus {
+    background: #4CAF50;
+    color: white;
+}
+
 .form-group textarea {
     resize: vertical;
     min-height: 120px;
