@@ -4,7 +4,8 @@ footer {
     color: #fff;
     padding: 40px 20px;
     text-align: center;
-    margin-top: -1px;
+    border-top: 3px solid #444;
+    margin-top: 40px;
 }
 
 .footer-container {
