@@ -14,7 +14,7 @@
         "en": "Full cycle game development from concept to release on all popular platforms"
       },
       "features": [
-        { "ru": "Unity, Unreal Engine", "en": "Unity, Unreal Engine" },
+        { "ru": "Unity, Unreal Engine, Cocos", "en": "Unity, Unreal Engine, Cocos" },
         { "ru": "Мобильные платформы", "en": "Mobile platforms" },
         { "ru": "PC/Console игры", "en": "PC/Console games" }
       ]
