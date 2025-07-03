@@ -32,8 +32,8 @@
       "type": "discord",
       "icon": "🎮",
       "label": { "ru": "Discord", "en": "Discord" },
-      "value": "CapyDev#1234",
-      "link": "#"
+      "value": "CapyDev Discord",
+      "link": "https://discord.gg/S82Asmjrme"
     }
   ],
   "form": {
