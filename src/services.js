@@ -11,7 +11,7 @@ export function renderServices(servicesData, lang) {
 
     servicesData.items.forEach(service => {
         const serviceCard = document.createElement('div');
-        serviceCard.className = 'service-card';
+        serviceCard.className = 'service-card card';
 
         const featuresHTML = service.features.map(feature => 
             `<li>${feature[lang]}</li>`

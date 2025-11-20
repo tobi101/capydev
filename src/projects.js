@@ -6,7 +6,7 @@ export function renderProjects(data, lang, uiTextsData) {
 
     data.items.forEach((item, index) => {
         const card = document.createElement("div");
-        card.className = "project-item";
+        card.className = "project-item card";
         card.dataset.index = index;
 
         const imageDiv = document.createElement("div");
@@ -133,7 +133,7 @@ function openProjectModal(project, lang, uiTextsData) {
                     <div class="project-technologies">
                         <h4>${uiTextsData.projectModal.technologiesTitle[lang]}</h4>
                         <div class="tech-tags">
-                            ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                            ${project.technologies.map(tech => `<span class="tech-tag tag">${tech}</span>`).join('')}
                         </div>
                     </div>
                 ` : ''}
@@ -172,12 +172,12 @@ function openProjectModal(project, lang, uiTextsData) {
                             } else if (key === 'store') {
                                 label = uiTextsData.projectModal.linkLabels.store[lang];
                             }
-                            return `<a href="${url}" target="_blank" class="project-link-btn">${label}</a>`;
+                            return `<a href="${url}" target="_blank" class="project-link-btn btn btn-sm">${label}</a>`;
                         }).join('')}
                     </div>
                 ` : project.link ? `
                     <div class="project-links">
-                        <a href="${project.link}" target="_blank" class="project-link-btn">
+                        <a href="${project.link}" target="_blank" class="project-link-btn btn btn-sm">
                             ${uiTextsData.projectModal.linkLabels.viewProject[lang]}
                         </a>
                     </div>

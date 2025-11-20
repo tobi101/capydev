@@ -16,7 +16,7 @@ export function renderTeam(data, lang, uiTextsData) {
     data.items.forEach((member, index) => {
         // Карточка команды
         const teamCard = document.createElement("div");
-        teamCard.className = "team-member";
+        teamCard.className = "team-member card";
         teamCard.dataset.index = index;
 
         // Фото участника
@@ -61,7 +61,7 @@ export function renderTeam(data, lang, uiTextsData) {
             
             member.skills.forEach(skill => {
                 const skillTag = document.createElement("span");
-                skillTag.className = "skill-tag";
+                skillTag.className = "skill-tag tag";
                 skillTag.textContent = skill;
                 skillsDiv.appendChild(skillTag);
             });
@@ -95,7 +95,7 @@ export function renderTeam(data, lang, uiTextsData) {
 
         // Кнопка связаться
         const contactBtn = document.createElement("button");
-        contactBtn.className = "contact-member-btn";
+        contactBtn.className = "contact-member-btn btn btn-xs";
         contactBtn.textContent = uiTextsData.teamCard.contactButton[lang];
         contactBtn.addEventListener('click', () => {
             if (member.social?.email) {

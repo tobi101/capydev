@@ -6,76 +6,47 @@
     padding: 20px 0;
 }
 
-/* Team Member Card */
+/* Team Member Card - используем .card */
 .team-member {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
     text-align: center;
-    transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
-    opacity: 0;
-    transform: translateY(50px);
-    /* --- Новые стили для flex-верстки и высоты --- */
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 400px; /* Фиксированная высота карточки */
-    padding: 0; /* Убираем внутренние отступы */
+    height: 400px;
+    padding: 0;
 }
 
-section.visible .team-member {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.team-member:nth-child(1) { transition-delay: 0.1s; }
-.team-member:nth-child(2) { transition-delay: 0.2s; }
-.team-member:nth-child(3) { transition-delay: 0.3s; }
-.team-member:nth-child(4) { transition-delay: 0.4s; }
-
-.team-member:hover {
-    transform: translateY(-10px); /* Оставляем эффект "подъема" */
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(76, 175, 80, 0.5);
-    box-shadow: 0 20px 40px rgba(76, 175, 80, 0.2);
-}
-
-/* --- Стили для фото --- */
 .member-photo {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 75%; /* Занимает большую часть высоты */
+    height: 75%;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* --- Оставляем только анимацию transform --- */
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
 }
 
 .member-photo img {
-    /* --- Увеличиваем фото и радиус --- */
     width: 260px;
     height: 260px;
-    border-radius: 100px; /* Увеличенный радиус для эффекта "суперэллипса" */
+    border-radius: 100px;
     object-fit: cover;
-    border: 3px solid rgba(76, 175, 80, 0.3);
-    transition: all 0.4s ease;
+    border: 3px solid var(--border-accent);
+    transition: var(--transition-medium);
     background: #1a1a1a;
 }
 
 .team-member:hover .member-photo {
-    /* --- Корректируем сдвиг и масштаб --- */
-    transform: translateY(-25%) scale(0.5); /* Уменьшается и сдвигается вверх */
+    transform: translateY(-25%) scale(0.5);
 }
 
 .team-member:hover .member-photo img {
-    border-color: #4CAF50;
+    border-color: var(--primary-color);
 }
 
 /* --- Новый контейнер для контента --- */
@@ -102,14 +73,14 @@ section.visible .team-member {
 }
 
 .member-info h4 {
-    color: #4CAF50;
+    color: var(--primary-color);
     font-size: 1.4rem;
     margin-bottom: 8px;
     font-weight: bold;
 }
 
 .member-role {
-    color: #ccc;
+    color: var(--text-secondary);
     font-size: 1rem;
     margin-bottom: 15px;
     text-transform: uppercase;
@@ -132,13 +103,13 @@ section.visible .team-member {
 }
 
 .member-description {
-    color: #bbb;
+    color: var(--text-muted);
     font-size: 0.9rem;
     line-height: 1.6;
     margin-bottom: 15px;
 }
 
-/* Skills Tags */
+/* Skills Tags - используем .tag */
 .member-skills {
     display: flex;
     flex-wrap: wrap;
@@ -148,13 +119,9 @@ section.visible .team-member {
 }
 
 .skill-tag {
-    background: rgba(76, 175, 80, 0.2);
-    color: #4CAF50;
     padding: 4px 10px;
     border-radius: 12px;
     font-size: 0.8rem;
-    border: 1px solid rgba(76, 175, 80, 0.3);
-    transition: all 0.3s ease;
 }
 
 .skill-tag:hover {
@@ -178,39 +145,26 @@ section.visible .team-member {
     height: 40px;
     border-radius: 50%;
     background: rgba(76, 175, 80, 0.2);
-    color: #4CAF50;
+    color: var(--primary-color);
     text-decoration: none;
     font-size: 1.2rem;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(76, 175, 80, 0.3);
+    transition: var(--transition-smooth);
+    border: 1px solid var(--border-accent);
 }
 
 .social-link:hover {
-    background: linear-gradient(45deg, #4CAF50, #45a049);
+    background: var(--gradient-primary);
     color: white;
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
 }
 
-/* Contact Button */
+/* Contact Button - используем .btn */
 .contact-member-btn {
-    background: linear-gradient(45deg, #4CAF50, #45a049);
-    color: white;
-    border: none;
     padding: 10px 20px;
     border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     font-size: 0.8rem;
-    margin-top: 15px; /* Добавляем отступ сверху для отделения от соц. иконок */
-}
-
-.contact-member-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    margin-top: 15px;
 }
 
 /* Mobile Responsive */
