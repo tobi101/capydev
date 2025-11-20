@@ -175,3 +175,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Обработать assets/images (по умолчанию)
+# python convert_to_webp.py
+
+# Обработать конкретную папку
+# python convert_to_webp.py "путь/к/папке"
+
+# С настройкой качества (0-100)
+# python convert_to_webp.py "assets/images" 90
+
+# Рекурсивно (все подпапки)
+# python convert_to_webp.py "assets/images" 85 --recursive
