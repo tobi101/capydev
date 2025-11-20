@@ -4,6 +4,7 @@ import { renderWorkflow } from './workflow.js';
 import { renderContacts } from './contacts.js';
 import { renderProjects } from './projects.js';
 import { renderTeam } from './teamCards.js';
+import { initNews } from './news.js';
 
 // Функция для загрузки JSON5-файлов
 async function fetchJSON(url) {
@@ -27,6 +28,12 @@ let uiTextsData = {};
 // Определяем язык (по умолчанию русский)
 const lang = navigator.language.startsWith('en') ? 'en' : 'ru';
 
+// Экспортируем функцию для получения локализованного текста
+export function getLocalizedText(textObj, language) {
+    if (typeof textObj === 'string') return textObj;
+    return textObj[language] || textObj['ru'] || textObj['en'] || '';
+}
+
 function renderPage() {
     // Отрисовываем контент
     document.getElementById('site-title').textContent = contentData.siteTitle[lang];
@@ -38,6 +45,7 @@ function renderPage() {
         'link-projects': contentData.nav.projects[lang],
         'link-workflow': contentData.nav.workflow[lang],
         'link-team': contentData.nav.team[lang],
+        'link-news': contentData.nav.news ? contentData.nav.news[lang] : (lang === 'ru' ? 'Новости' : 'News'),
         'link-contacts': contentData.nav.contacts[lang]
     };
 
@@ -165,6 +173,7 @@ async function loadData() {
         renderWorkflow(workflowData, lang);
         renderProjects(projectsData, lang, uiTextsData);
         renderTeam(teamData, lang, uiTextsData);
+        await initNews(lang);
         renderContacts(contactsData, lang);
         renderFooter(uiTextsData, lang);
 

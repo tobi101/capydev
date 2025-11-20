@@ -14,6 +14,7 @@
     "projects": { "ru": "Проекты", "en": "Projects" },
     "workflow": { "ru": "Процесс", "en": "Workflow" },
     "team": { "ru": "Команда", "en": "Team" },
+    "news": { "ru": "Новости", "en": "News" },
     "contacts": { "ru": "Контакты", "en": "Contacts" }
   },
   

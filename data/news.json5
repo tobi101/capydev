@@ -1,0 +1,132 @@
+{
+  "localization": {
+    "sectionTitle": {
+      "ru": "Новости и блог",
+      "en": "News & Blog"
+    },
+    "readMore": {
+      "ru": "Читать далее",
+      "en": "Read more"
+    },
+    "allNews": {
+      "ru": "Все новости",
+      "en": "All news"
+    }
+  },
+  "items": [
+    {
+      "id": "1",
+      "title": {
+        "ru": "Оптимизация мобильных игр: наш опыт",
+        "en": "Mobile Game Optimization: Our Experience"
+      },
+      "excerpt": {
+        "ru": "Делимся секретами, как мы снизили потребление памяти на 40% и увеличили FPS в два раза в нашем последнем проекте.",
+        "en": "Sharing secrets on how we reduced memory consumption by 40% and doubled FPS in our latest project."
+      },
+      "image": "assets/images/news/optimization.webp",
+      "date": "2025-11-15",
+      "tags": ["Unity", "Optimization", "Mobile"],
+      "readTime": {
+        "ru": "5 мин",
+        "en": "5 min"
+      },
+      "featured": true
+    },
+    {
+      "id": "2",
+      "title": {
+        "ru": "Запуск нового проекта: AR-приключение",
+        "en": "New Project Launch: AR Adventure"
+      },
+      "excerpt": {
+        "ru": "Анонсируем нашу новую AR-игру с использованием передовых технологий дополненной реальности для iOS и Android.",
+        "en": "Announcing our new AR game using cutting-edge augmented reality technologies for iOS and Android."
+      },
+      "image": "assets/images/news/ar-game.webp",
+      "date": "2025-11-10",
+      "tags": ["AR", "Mobile", "Announcement"],
+      "readTime": {
+        "ru": "3 мин",
+        "en": "3 min"
+      },
+      "featured": true
+    },
+    {
+      "id": "3",
+      "title": {
+        "ru": "Кейс: разработка Telegram Mini App за 2 недели",
+        "en": "Case Study: Telegram Mini App in 2 Weeks"
+      },
+      "excerpt": {
+        "ru": "Подробная история о том, как мы создали популярное мини-приложение для Telegram с нуля всего за 14 дней.",
+        "en": "Detailed story of how we created a popular Telegram mini-app from scratch in just 14 days."
+      },
+      "image": "assets/images/news/telegram-app.webp",
+      "date": "2025-11-05",
+      "tags": ["Telegram", "JavaScript", "Case Study"],
+      "readTime": {
+        "ru": "7 мин",
+        "en": "7 min"
+      },
+      "featured": false
+    },
+    {
+      "id": "4",
+      "title": {
+        "ru": "Unity 6: что нового и стоит ли переходить?",
+        "en": "Unity 6: What's New and Should You Upgrade?"
+      },
+      "excerpt": {
+        "ru": "Обзор главных нововведений Unity 6 и наш практический опыт миграции проектов на новую версию движка.",
+        "en": "Overview of Unity 6's main features and our practical experience migrating projects to the new engine version."
+      },
+      "image": "assets/images/news/unity6.webp",
+      "date": "2025-10-28",
+      "tags": ["Unity", "Review", "GameDev"],
+      "readTime": {
+        "ru": "6 мин",
+        "en": "6 min"
+      },
+      "featured": false
+    },
+    {
+      "id": "5",
+      "title": {
+        "ru": "Наша команда пополнилась: встречайте нового 3D-художника",
+        "en": "Team Growth: Meet Our New 3D Artist"
+      },
+      "excerpt": {
+        "ru": "Рады представить нового члена команды CapyDev — талантливого 3D-художника с опытом работы в AAA-студиях.",
+        "en": "Excited to introduce a new CapyDev team member — a talented 3D artist with AAA studio experience."
+      },
+      "image": "assets/images/news/new-artist.webp",
+      "date": "2025-10-20",
+      "tags": ["Team", "News"],
+      "readTime": {
+        "ru": "2 мин",
+        "en": "2 min"
+      },
+      "featured": false
+    },
+    {
+      "id": "6",
+      "title": {
+        "ru": "Участие в GameDev Conference 2025",
+        "en": "GameDev Conference 2025 Participation"
+      },
+      "excerpt": {
+        "ru": "Мы представили наши проекты на крупнейшей игровой конференции и получили награду за инновационный геймплей.",
+        "en": "We showcased our projects at the largest gaming conference and received an award for innovative gameplay."
+      },
+      "image": "assets/images/news/conference.webp",
+      "date": "2025-10-12",
+      "tags": ["Events", "Awards", "Community"],
+      "readTime": {
+        "ru": "4 мин",
+        "en": "4 min"
+      },
+      "featured": false
+    }
+  ]
+}
