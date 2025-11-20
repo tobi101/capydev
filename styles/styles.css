@@ -47,7 +47,7 @@ html {
 body {
     overflow-x: hidden;
     background-color: var(--bg-dark);
-    font-family: 'Arial', sans-serif;
+    font-family: 'Montserrat', 'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
 }
