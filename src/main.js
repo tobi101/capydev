@@ -22,6 +22,7 @@ let teamData = {};
 let servicesData = {};
 let workflowData = {};
 let contactsData = {};
+let uiTextsData = {};
 
 // Определяем язык (по умолчанию русский)
 const lang = navigator.language.startsWith('en') ? 'en' : 'ru';
@@ -101,18 +102,53 @@ function updateActiveItem(container) {
     }
 }
 
+// Функция для отрисовки футера
+function renderFooter(uiTextsData, lang) {
+    const footer = document.querySelector('footer .footer-container');
+    if (!footer) return;
+
+    const copyright = footer.querySelector('p');
+    if (copyright) {
+        copyright.textContent = uiTextsData.footer.copyright[lang];
+    }
+
+    const links = footer.querySelectorAll('.footer-links a');
+    if (links.length >= 3) {
+        links[0].textContent = uiTextsData.footer.contactEmail;
+        links[0].href = `mailto:${uiTextsData.footer.contactEmail}`;
+        links[1].textContent = uiTextsData.footer.links.contacts[lang];
+        links[2].textContent = uiTextsData.footer.links.about[lang];
+    }
+
+    // Обновляем кнопку "Наверх"
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+        backToTop.setAttribute('aria-label', uiTextsData.backToTop.ariaLabel[lang]);
+    }
+
+    // Обновляем title страницы
+    document.title = uiTextsData.meta.pageTitle[lang];
+    
+    // Обновляем alt логотипа
+    const logoImg = document.querySelector('.logo-img');
+    if (logoImg) {
+        logoImg.alt = uiTextsData.meta.logoAlt[lang];
+    }
+}
+
 async function loadData() {
     try {
         const lang = navigator.language.startsWith("en") ? "en" : "ru";
 
         // Загружаем все данные параллельно
-        const [content, projects, team, services, workflow, contacts] = await Promise.all([
+        const [content, projects, team, services, workflow, contacts, uiTexts] = await Promise.all([
             fetchJSON('data/content.json5'),
             fetchJSON('data/projects.json5'),
             fetchJSON('data/team.json5'),
             fetchJSON('data/services.json5'),
             fetchJSON('data/workflow.json5'),
-            fetchJSON('data/contacts.json5')
+            fetchJSON('data/contacts.json5'),
+            fetchJSON('data/ui-texts.json5')
         ]);
 
         contentData = content;
@@ -121,14 +157,16 @@ async function loadData() {
         servicesData = services;
         workflowData = workflow;
         contactsData = contacts;
+        uiTextsData = uiTexts;
 
         // Отрисовываем все секции
         renderPage();
         renderServices(servicesData, lang);
         renderWorkflow(workflowData, lang);
-        renderProjects(projectsData, lang);
-        renderTeam(teamData, lang);
+        renderProjects(projectsData, lang, uiTextsData);
+        renderTeam(teamData, lang, uiTextsData);
         renderContacts(contactsData, lang);
+        renderFooter(uiTextsData, lang);
 
     } catch (error) {
         console.error("Ошибка загрузки данных:", error);

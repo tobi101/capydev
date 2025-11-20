@@ -1,0 +1,90 @@
+{
+  // === ОБЩИЕ ТЕКСТЫ ИНТЕРФЕЙСА ===
+  
+  // Тексты для модального окна проектов
+  "projectModal": {
+    "viewDetailsButton": {
+      "ru": "Подробнее",
+      "en": "View Details"
+    },
+    "technologiesTitle": {
+      "ru": "Технологии:",
+      "en": "Technologies:"
+    },
+    "featuresTitle": {
+      "ru": "Особенности:",
+      "en": "Features:"
+    },
+    "statisticsTitle": {
+      "ru": "Статистика:",
+      "en": "Statistics:"
+    },
+    "linkLabels": {
+      "demo": {
+        "ru": "Демо",
+        "en": "Demo"
+      },
+      "github": "GitHub",
+      "store": {
+        "ru": "Магазин",
+        "en": "Store"
+      },
+      "viewProject": {
+        "ru": "Посмотреть проект",
+        "en": "View Project"
+      }
+    },
+    "thumbnailAlt": {
+      "ru": "Миниатюра",
+      "en": "Thumbnail"
+    }
+  },
+  
+  // Тексты для карточек команды
+  "teamCard": {
+    "contactButton": {
+      "ru": "Связаться",
+      "en": "Contact"
+    }
+  },
+  
+  // Футер
+  "footer": {
+    "copyright": {
+      "ru": "© 2025 Аутсорс студия по разработке игр. Все права защищены.",
+      "en": "© 2025 Game Outsourcing Studio. All rights reserved."
+    },
+    "contactEmail": "contact@gameoutsourcing.com",
+    "links": {
+      "contacts": {
+        "ru": "Контакты",
+        "en": "Contacts"
+      },
+      "about": {
+        "ru": "О нас",
+        "en": "About"
+      }
+    }
+  },
+  
+  // Кнопка "Наверх"
+  "backToTop": {
+    "ariaLabel": {
+      "ru": "Наверх",
+      "en": "Back to top"
+    },
+    "text": "↑"
+  },
+  
+  // Мета-информация
+  "meta": {
+    "pageTitle": {
+      "ru": "CapyDev Studio - Разработка игр",
+      "en": "CapyDev Studio - Game Development"
+    },
+    "logoAlt": {
+      "ru": "Логотип",
+      "en": "Logo"
+    }
+  }
+}

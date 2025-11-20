@@ -1,4 +1,7 @@
 {
+  // === КОНТАКТЫ И ФОРМА ОБРАТНОЙ СВЯЗИ ===
+  
+  // Заголовки секции контактов
   "localization": {
     "sectionTitle": {
       "ru": "Свяжитесь с нами",
@@ -13,6 +16,8 @@
       "en": "Tell us about your idea and we'll help bring it to life"
     }
   },
+  
+  // Контактная информация (email, telegram, discord)
   "contactInfo": [
     {
       "type": "email",
@@ -36,7 +41,10 @@
       "link": "https://discord.gg/S82Asmjrme"
     }
   ],
+  
+  // Форма обратной связи
   "form": {
+    // Поля формы
     "fields": [
       {
         "name": "name",

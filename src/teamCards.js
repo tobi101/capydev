@@ -4,8 +4,9 @@
  * Функция генерирует HTML-разметку карточек команды на основе данных и языка.
  * @param {Object} data - JSON-объект с данными о команде.
  * @param {string} lang - Код языка (например, "ru" или "en").
+ * @param {Object} uiTextsData - Тексты интерфейса.
  */
-export function renderTeam(data, lang) {
+export function renderTeam(data, lang, uiTextsData) {
     const teamContainer = document.getElementById("team-container");
     if (!teamContainer) return;
 
@@ -95,7 +96,7 @@ export function renderTeam(data, lang) {
         // Кнопка связаться
         const contactBtn = document.createElement("button");
         contactBtn.className = "contact-member-btn";
-        contactBtn.textContent = lang === 'ru' ? 'Связаться' : 'Contact';
+        contactBtn.textContent = uiTextsData.teamCard.contactButton[lang];
         contactBtn.addEventListener('click', () => {
             if (member.social?.email) {
                 window.open(`mailto:${member.social.email}`, '_blank');

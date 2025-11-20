@@ -1,4 +1,4 @@
-export function renderProjects(data, lang) {
+export function renderProjects(data, lang, uiTextsData) {
     const projectsContainer = document.getElementById("projects-container");
     if (!projectsContainer) return;
 
@@ -20,7 +20,7 @@ export function renderProjects(data, lang) {
         overlay.className = "project-overlay";
         overlay.innerHTML = `
             <button class="view-project-btn" data-project-index="${index}">
-                ${lang === 'ru' ? 'Подробнее' : 'View Details'}
+                ${uiTextsData.projectModal.viewDetailsButton[lang]}
             </button>
         `;
 
@@ -59,7 +59,7 @@ export function renderProjects(data, lang) {
             
             setTimeout(() => {
                 const index = parseInt(e.target.dataset.projectIndex);
-                openProjectModal(data.items[index], lang);
+                openProjectModal(data.items[index], lang, uiTextsData);
                 
                 // Возвращаем карточку в исходное состояние
                 projectCard.style.transform = '';
@@ -69,7 +69,7 @@ export function renderProjects(data, lang) {
     });
 }
 
-function openProjectModal(project, lang) {
+function openProjectModal(project, lang, uiTextsData) {
     const modal = document.getElementById('projectModal');
     const modalBody = document.getElementById('modal-body');
     
@@ -106,7 +106,7 @@ function openProjectModal(project, lang) {
                     <div class="media-thumbnails">
                         ${project.media.map((media, index) => `
                             <div class="thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}">
-                                <img src="${media.thumbnail || media.url}" alt="Thumbnail ${index + 1}">
+                                <img src="${media.thumbnail || media.url}" alt="${uiTextsData.projectModal.thumbnailAlt[lang]} ${index + 1}">
                             </div>
                         `).join('')}
                     </div>
@@ -131,7 +131,7 @@ function openProjectModal(project, lang) {
                 
                 ${project.technologies ? `
                     <div class="project-technologies">
-                        <h4>${lang === 'ru' ? 'Технологии:' : 'Technologies:'}</h4>
+                        <h4>${uiTextsData.projectModal.technologiesTitle[lang]}</h4>
                         <div class="tech-tags">
                             ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                         </div>
@@ -140,7 +140,7 @@ function openProjectModal(project, lang) {
                 
                 ${project.features ? `
                     <div class="project-features">
-                        <h4>${lang === 'ru' ? 'Особенности:' : 'Features:'}</h4>
+                        <h4>${uiTextsData.projectModal.featuresTitle[lang]}</h4>
                         <ul>
                             ${project.features[lang] ? project.features[lang].map(feature => `<li>${feature}</li>`).join('') : ''}
                         </ul>
@@ -149,7 +149,7 @@ function openProjectModal(project, lang) {
 
                 ${project.stats ? `
                     <div class="project-stats">
-                        <h4>${lang === 'ru' ? 'Статистика:' : 'Statistics:'}</h4>
+                        <h4>${uiTextsData.projectModal.statisticsTitle[lang]}</h4>
                         <div class="stats-grid">
                             ${Object.entries(project.stats).map(([key, value]) => `
                                 <div class="stat-item">
@@ -163,19 +163,22 @@ function openProjectModal(project, lang) {
                 
                 ${project.links ? `
                     <div class="project-links">
-                        ${Object.entries(project.links).map(([key, url]) => `
-                            <a href="${url}" target="_blank" class="project-link-btn">
-                                ${key === 'demo' ? (lang === 'ru' ? 'Демо' : 'Demo') : 
-                                  key === 'github' ? 'GitHub' :
-                                  key === 'store' ? (lang === 'ru' ? 'Магазин' : 'Store') :
-                                  key}
-                            </a>
-                        `).join('')}
+                        ${Object.entries(project.links).map(([key, url]) => {
+                            let label = key;
+                            if (key === 'demo') {
+                                label = uiTextsData.projectModal.linkLabels.demo[lang];
+                            } else if (key === 'github') {
+                                label = uiTextsData.projectModal.linkLabels.github;
+                            } else if (key === 'store') {
+                                label = uiTextsData.projectModal.linkLabels.store[lang];
+                            }
+                            return `<a href="${url}" target="_blank" class="project-link-btn">${label}</a>`;
+                        }).join('')}
                     </div>
                 ` : project.link ? `
                     <div class="project-links">
                         <a href="${project.link}" target="_blank" class="project-link-btn">
-                            ${lang === 'ru' ? 'Посмотреть проект' : 'View Project'}
+                            ${uiTextsData.projectModal.linkLabels.viewProject[lang]}
                         </a>
                     </div>
                 ` : ''}

@@ -1,8 +1,13 @@
 ﻿{
+  // === ОСНОВНОЙ КОНТЕНТ САЙТА ===
+  
+  // Название сайта в шапке
   "siteTitle": {
     "ru": "CapyDev Studio",
     "en": "CapyDev Studio"
   },
+  
+  // Навигационное меню
   "nav": {
     "about": { "ru": "О нас", "en": "About" },
     "services": { "ru": "Услуги", "en": "Services" },
@@ -11,6 +16,8 @@
     "team": { "ru": "Команда", "en": "Team" },
     "contacts": { "ru": "Контакты", "en": "Contacts" }
   },
+  
+  // Главная (Hero) секция
   "hero": {
     "title": {
       "ru": "Профессиональная разработка игр",
@@ -25,6 +32,8 @@
       "en": "Discuss Project"
     }
   },
+  
+  // Секция "О нас"
   "about": {
     "title": {
       "ru": "О нас",
@@ -34,6 +43,8 @@
       "ru": "CapyDev - это команда опытных разработчиков игр, специализирующихся на создании качественных проектов для различных платформ. Мы объединяем креативность и технические навыки для воплощения ваших идей в жизнь.",
       "en": "CapyDev is a team of experienced game developers specializing in creating quality projects for various platforms. We combine creativity and technical skills to bring your ideas to life."
     },
+    
+    // Статистические показатели
     "stats": [
       {
         "number": "50+",
