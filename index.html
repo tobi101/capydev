@@ -161,6 +161,26 @@
     </div>
 </div>
 
+<!-- News Modal -->
+<div id="newsModal" class="modal news-modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+        <span class="close" role="button" tabindex="0" aria-label="Закрыть новость">&times;</span>
+        <div class="news-modal-body">
+            <div id="newsModalCover" class="news-modal-cover">
+                <img id="newsModalImage" alt="" loading="lazy">
+            </div>
+            <div class="news-modal-meta">
+                <span id="newsModalDate" class="news-date"></span>
+                <span id="newsModalReadTime" class="news-read-time"></span>
+            </div>
+            <h2 id="newsModalTitle" class="news-modal-title"></h2>
+            <div id="newsModalTags" class="news-modal-tags"></div>
+            <div id="newsModalArticle" class="news-modal-article"></div>
+        </div>
+    </div>
+</div>
+
 <!-- Подключаем p5.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
 <!-- Фоновая анимация -->

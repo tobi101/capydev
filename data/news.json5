@@ -31,7 +31,12 @@
         "ru": "5 мин",
         "en": "5 min"
       },
-      "featured": true
+      "featured": true,
+      "cta": {
+        "type": "modal",
+        "label": { "ru": "Читать кейс", "en": "Read case" },
+        "markdown": "data/news/optimization.md"
+      }
     },
     {
       "id": "2",
@@ -50,7 +55,12 @@
         "ru": "3 мин",
         "en": "3 min"
       },
-      "featured": true
+      "featured": true,
+      "cta": {
+        "type": "external",
+        "label": { "ru": "Статья на VC.ru", "en": "Read on VC.ru" },
+        "url": "https://vc.ru/tribuna/123456-capydev-ar-adventure"
+      }
     },
     {
       "id": "3",
@@ -69,7 +79,12 @@
         "ru": "7 мин",
         "en": "7 min"
       },
-      "featured": false
+      "featured": false,
+      "cta": {
+        "type": "modal",
+        "label": { "ru": "Смотреть кейс", "en": "View case" },
+        "markdown": "data/news/telegram-case.md"
+      }
     },
     {
       "id": "4",
@@ -88,7 +103,12 @@
         "ru": "6 мин",
         "en": "6 min"
       },
-      "featured": false
+      "featured": false,
+      "cta": {
+        "type": "external",
+        "label": { "ru": "Обзор на Хабре", "en": "Read on Habr" },
+        "url": "https://habr.com/ru/companies/capydev/articles/unity6-review"
+      }
     },
     {
       "id": "5",
@@ -126,7 +146,12 @@
         "ru": "4 мин",
         "en": "4 min"
       },
-      "featured": false
+      "featured": false,
+      "cta": {
+        "type": "external",
+        "label": { "ru": "Репортаж с конференции", "en": "Conference recap" },
+        "url": "https://www.gamedevconf.com/news/capydev-award"
+      }
     }
   ]
 }

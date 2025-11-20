@@ -1,6 +1,27 @@
+import JSON5 from 'json5';
 import { getLocalizedText } from './main.js';
 
 let newsData = null;
+let currentNewsLanguage = 'ru';
+let newsModalInitialized = false;
+
+const CTA_TYPES = {
+    MODAL: 'modal',
+    EXTERNAL: 'external'
+};
+
+const newsModalElements = {
+    wrapper: null,
+    backdrop: null,
+    closeBtn: null,
+    title: null,
+    date: null,
+    readTime: null,
+    tags: null,
+    article: null,
+    image: null,
+    cover: null
+};
 
 /**
  * Загружает данные новостей из JSON файла
@@ -9,9 +30,7 @@ async function loadNewsData() {
     try {
         const response = await fetch('data/news.json5');
         const text = await response.text();
-        // Простая обработка JSON5 (удаление комментариев)
-        const jsonText = text.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
-        newsData = JSON.parse(jsonText);
+        newsData = JSON5.parse(text);
         return newsData;
     } catch (error) {
         console.error('Ошибка загрузки данных новостей:', error);
@@ -40,10 +59,13 @@ function createNewsCard(newsItem, lang) {
     const excerpt = getLocalizedText(newsItem.excerpt, lang);
     const readTime = getLocalizedText(newsItem.readTime, lang);
     const formattedDate = formatDate(newsItem.date, lang);
+    const dateMeta = renderMetaValue(formattedDate, 'date');
+    const timeMeta = renderMetaValue(readTime, 'time');
     
     const tags = newsItem.tags.map(tag => `<span class="news-tag">${tag}</span>`).join('');
     
     const featuredClass = newsItem.featured ? 'news-card-featured' : '';
+    const ctaHtml = getCtaHtml(newsItem, lang);
     
     return `
         <article class="news-card ${featuredClass}" data-id="${newsItem.id}">
@@ -53,23 +75,78 @@ function createNewsCard(newsItem, lang) {
             </div>
             <div class="news-content">
                 <div class="news-meta">
-                    <span class="news-date">${formattedDate}</span>
-                    <span class="news-read-time">${readTime}</span>
+                    <span class="news-date">${dateMeta}</span>
+                    <span class="news-read-time">${timeMeta}</span>
                 </div>
                 <h3 class="news-title">${title}</h3>
                 <p class="news-excerpt">${excerpt}</p>
                 <div class="news-tags">
                     ${tags}
                 </div>
-                <button class="news-read-more" data-id="${newsItem.id}">
-                    ${getLocalizedText(newsData.localization.readMore, lang)}
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </button>
+                ${ctaHtml}
             </div>
         </article>
     `;
+}
+
+function renderMetaValue(value, iconType) {
+    if (!value) return '';
+    return `${getMetaIcon(iconType)}<span class="news-meta-text">${value}</span>`;
+}
+
+function getMetaIcon(type) {
+    if (type === 'date') {
+        return `
+            <svg class="news-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                <rect x="4" y="6" width="16" height="14" rx="2" ry="2" stroke-width="1.8"></rect>
+                <path d="M16 4v4M8 4v4M4 11h16" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+        `;
+    }
+
+    if (type === 'time') {
+        return `
+            <svg class="news-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                <circle cx="12" cy="12" r="8.5" stroke-width="1.8"></circle>
+                <path d="M12 7v5l3 2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        `;
+    }
+
+    return '';
+}
+
+function getCtaHtml(newsItem, lang) {
+    const cta = newsItem.cta;
+    if (!cta) {
+        return '';
+    }
+
+    const label = getLocalizedText(cta.label || newsData.localization.readMore, lang);
+
+    if (cta.type === CTA_TYPES.EXTERNAL && cta.url) {
+        return `
+            <a class="news-read-more news-cta-link" href="${cta.url}" target="_blank" rel="noopener noreferrer">
+                ${label}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </a>
+        `;
+    }
+
+    if (cta.type === CTA_TYPES.MODAL && cta.markdown) {
+        return `
+            <button class="news-read-more news-cta-modal" data-id="${newsItem.id}" data-action="modal">
+                ${label}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        `;
+    }
+
+    return '';
 }
 
 /**
@@ -78,6 +155,8 @@ function createNewsCard(newsItem, lang) {
 export function renderNews(lang) {
     const container = document.getElementById('news-container');
     if (!container || !newsData) return;
+
+    currentNewsLanguage = lang;
 
     // Обновляем заголовок секции
     const sectionTitle = document.getElementById('news-title');
@@ -96,17 +175,20 @@ export function renderNews(lang) {
     const newsHTML = displayNews.map(item => createNewsCard(item, lang)).join('');
     container.innerHTML = newsHTML;
 
-    // Добавляем обработчики для кнопок "Читать далее"
-    const readMoreButtons = container.querySelectorAll('.news-read-more');
-    readMoreButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const newsId = e.currentTarget.dataset.id;
-            openNewsDetail(newsId);
-        });
-    });
+    attachNewsCtaHandlers(lang);
 
     // Анимация появления карточек
     animateNewsCards();
+}
+
+function attachNewsCtaHandlers(lang) {
+    const modalButtons = document.querySelectorAll('.news-cta-modal');
+    modalButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const newsId = e.currentTarget.dataset.id;
+            await openNewsDetail(newsId, lang);
+        });
+    });
 }
 
 /**
@@ -134,18 +216,23 @@ function animateNewsCards() {
 }
 
 /**
- * Открывает детальную страницу новости (заглушка)
+ * Открывает детальную страницу новости в зависимости от типа CTA
  */
-function openNewsDetail(newsId) {
-    console.log('Opening news detail for ID:', newsId);
-    // Здесь можно реализовать модальное окно или переход на отдельную страницу
-    alert(`Детальная страница новости ${newsId} - будет реализована позже`);
+async function openNewsDetail(newsId, lang) {
+    if (!newsData) return;
+
+    const newsItem = newsData.items.find(item => item.id === newsId);
+    if (!newsItem || !newsItem.cta) return;
+
+    if (newsItem.cta.type === CTA_TYPES.MODAL) {
+        await openNewsModal(newsItem, lang);
+    }
 }
 
 /**
  * Фильтрует новости по тегу
  */
-export function filterNewsByTag(tag, language = 'ru') {
+export function filterNewsByTag(tag, language = currentNewsLanguage) {
     const container = document.getElementById('news-container');
     if (!container || !newsData) return;
 
@@ -164,6 +251,7 @@ export function filterNewsByTag(tag, language = 'ru') {
     const newsHTML = sortedNews.map(item => createNewsCard(item, language)).join('');
     container.innerHTML = newsHTML;
 
+    attachNewsCtaHandlers(language);
     animateNewsCards();
 }
 
@@ -172,6 +260,7 @@ export function filterNewsByTag(tag, language = 'ru') {
  */
 export async function initNews(language = 'ru') {
     await loadNewsData();
+    setupNewsModal();
     
     if (newsData) {
         renderNews(language);
@@ -181,4 +270,230 @@ export async function initNews(language = 'ru') {
     window.addEventListener('languageChanged', (e) => {
         renderNews(e.detail.language);
     });
+}
+
+async function openNewsModal(newsItem, lang) {
+    if (!newsItem.cta?.markdown) return;
+    if (!newsModalInitialized) {
+        setupNewsModal();
+    }
+
+    const { wrapper, title, date, readTime, tags, article, image, cover } = newsModalElements;
+    if (!wrapper || !title || !article) return;
+
+    const localizedTitle = getLocalizedText(newsItem.title, lang);
+    title.textContent = localizedTitle;
+    if (date) {
+        date.innerHTML = renderMetaValue(formatDate(newsItem.date, lang), 'date');
+    }
+    if (readTime) {
+        readTime.innerHTML = renderMetaValue(getLocalizedText(newsItem.readTime, lang), 'time');
+    }
+    if (tags) {
+        tags.innerHTML = newsItem.tags.map(tag => `<span class="news-tag">${tag}</span>`).join('');
+    }
+
+    if (image) {
+        if (newsItem.image) {
+            image.src = newsItem.image;
+            image.alt = localizedTitle;
+            image.style.display = 'block';
+            image.removeAttribute('aria-hidden');
+            if (cover) {
+                cover.classList.remove('hidden');
+            }
+        } else {
+            image.removeAttribute('src');
+            image.alt = '';
+            image.style.display = 'none';
+            image.setAttribute('aria-hidden', 'true');
+            if (cover) {
+                cover.classList.add('hidden');
+            }
+        }
+    }
+
+    if (article) {
+        article.innerHTML = '<p class="news-modal-loading">Загружаем статью...</p>';
+    }
+
+    try {
+        const markdown = await fetchMarkdownFile(newsItem.cta.markdown);
+        const html = convertMarkdownToHtml(markdown);
+        if (article) {
+            article.innerHTML = html;
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки markdown для новости:', error);
+        if (article) {
+            article.innerHTML = '<p class="news-modal-error">Не удалось загрузить статью. Попробуйте позже.</p>';
+        }
+    }
+
+    wrapper.style.display = 'block';
+    wrapper.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => {
+        wrapper.classList.add('show');
+    });
+    document.body.style.overflow = 'hidden';
+}
+
+async function fetchMarkdownFile(path) {
+    const response = await fetch(path);
+    if (!response.ok) {
+        throw new Error(`Не удалось загрузить markdown: ${path}`);
+    }
+    return response.text();
+}
+
+function convertMarkdownToHtml(markdown) {
+    if (!markdown) return '';
+
+    const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+    let html = '';
+    let unorderedListOpen = false;
+    let orderedListOpen = false;
+
+    const closeUnorderedList = () => {
+        if (unorderedListOpen) {
+            html += '</ul>';
+            unorderedListOpen = false;
+        }
+    };
+
+    const closeOrderedList = () => {
+        if (orderedListOpen) {
+            html += '</ol>';
+            orderedListOpen = false;
+        }
+    };
+
+    const closeAllLists = () => {
+        closeUnorderedList();
+        closeOrderedList();
+    };
+
+    lines.forEach((line) => {
+        const trimmed = line.trim();
+
+        if (trimmed.length === 0) {
+            closeAllLists();
+            return;
+        }
+
+        if (/^#{1,6}\s/.test(trimmed)) {
+            closeAllLists();
+            const level = Math.min(trimmed.match(/^#+/)[0].length + 1, 6);
+            const content = trimmed.replace(/^#{1,6}\s+/, '');
+            html += `<h${level}>${applyInlineMarkdown(content)}</h${level}>`;
+            return;
+        }
+
+        if (/^[-*+]\s+/.test(trimmed)) {
+            closeOrderedList();
+            if (!unorderedListOpen) {
+                html += '<ul>';
+                unorderedListOpen = true;
+            }
+            const content = trimmed.replace(/^[-*+]\s+/, '');
+            html += `<li>${applyInlineMarkdown(content)}</li>`;
+            return;
+        }
+
+        if (/^\d+\.\s+/.test(trimmed)) {
+            closeUnorderedList();
+            if (!orderedListOpen) {
+                html += '<ol>';
+                orderedListOpen = true;
+            }
+            const content = trimmed.replace(/^\d+\.\s+/, '');
+            html += `<li>${applyInlineMarkdown(content)}</li>`;
+            return;
+        }
+
+        closeAllLists();
+
+        html += `<p>${applyInlineMarkdown(trimmed)}</p>`;
+    });
+
+    closeAllLists();
+
+    return html;
+}
+
+function applyInlineMarkdown(text) {
+    const escaped = escapeHtml(text);
+    return escaped
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+
+function escapeHtml(value) {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+function setupNewsModal() {
+    if (newsModalInitialized) return;
+
+    const wrapper = document.getElementById('newsModal');
+    if (!wrapper) return;
+
+    newsModalElements.wrapper = wrapper;
+    newsModalElements.backdrop = wrapper.querySelector('.modal-backdrop');
+    newsModalElements.closeBtn = wrapper.querySelector('.close');
+    newsModalElements.title = document.getElementById('newsModalTitle');
+    newsModalElements.date = document.getElementById('newsModalDate');
+    newsModalElements.readTime = document.getElementById('newsModalReadTime');
+    newsModalElements.tags = document.getElementById('newsModalTags');
+    newsModalElements.article = document.getElementById('newsModalArticle');
+    newsModalElements.image = document.getElementById('newsModalImage');
+    newsModalElements.cover = document.getElementById('newsModalCover');
+
+    if (newsModalElements.image) {
+        newsModalElements.image.addEventListener('error', () => {
+            newsModalElements.image?.setAttribute('aria-hidden', 'true');
+            newsModalElements.image.style.display = 'none';
+            newsModalElements.cover?.classList.add('hidden');
+        });
+    }
+
+    newsModalElements.closeBtn?.addEventListener('click', closeNewsModal);
+    newsModalElements.closeBtn?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            closeNewsModal();
+        }
+    });
+    newsModalElements.backdrop?.addEventListener('click', closeNewsModal);
+    wrapper.addEventListener('click', (e) => {
+        if (e.target === wrapper) {
+            closeNewsModal();
+        }
+    });
+
+    document.addEventListener('keydown', handleNewsModalEscape);
+
+    newsModalInitialized = true;
+}
+
+function closeNewsModal() {
+    const wrapper = newsModalElements.wrapper;
+    if (!wrapper) return;
+
+    wrapper.classList.remove('show');
+    setTimeout(() => {
+        wrapper.style.display = 'none';
+        wrapper.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+function handleNewsModalEscape(event) {
+    if (event.key === 'Escape' && newsModalElements.wrapper?.classList.contains('show')) {
+        closeNewsModal();
+    }
 }
