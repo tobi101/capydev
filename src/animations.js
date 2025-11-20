@@ -111,27 +111,31 @@ function initActiveNavigation() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.header-nav a[href^="#"]');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                const id = entry.target.getAttribute('id');
-                
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${id}`) {
-                        link.classList.add('active');
-                    }
-                });
+    function updateActiveNav() {
+        const headerHeight = document.querySelector('.header')?.offsetHeight || 80;
+        const scrollPosition = window.pageYOffset + headerHeight + 100;
+
+        let currentSection = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSection = section.getAttribute('id');
             }
         });
-    }, {
-        threshold: 0.5,
-        rootMargin: '-80px 0px -50% 0px'
-    });
 
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateActiveNav);
+    updateActiveNav(); // Вызываем сразу при загрузке
 }
 
 function initHeroAnimations() {
