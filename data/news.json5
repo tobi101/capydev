@@ -11,6 +11,20 @@
     "allNews": {
       "ru": "Все новости",
       "en": "All news"
+    },
+    "pagination": {
+      "prev": {
+        "ru": "Предыдущие",
+        "en": "Newer"
+      },
+      "next": {
+        "ru": "Следующие",
+        "en": "Older"
+      },
+      "status": {
+        "ru": "Страница {current} из {total}",
+        "en": "Page {current} of {total}"
+      }
     }
   },
   "items": [
@@ -31,7 +45,10 @@
         "ru": "5 мин",
         "en": "5 min"
       },
-      "featured": true,
+      "label": {
+        "ru": "Топ",
+        "en": "Featured"
+      },
       "cta": {
         "type": "modal",
         "label": { "ru": "Читать кейс", "en": "Read case" },
@@ -55,7 +72,10 @@
         "ru": "3 мин",
         "en": "3 min"
       },
-      "featured": true,
+      "label": {
+        "ru": "Новое",
+        "en": "New"
+      },
       "cta": {
         "type": "external",
         "label": { "ru": "Статья на VC.ru", "en": "Read on VC.ru" },
@@ -79,7 +99,6 @@
         "ru": "7 мин",
         "en": "7 min"
       },
-      "featured": false,
       "cta": {
         "type": "modal",
         "label": { "ru": "Смотреть кейс", "en": "View case" },
@@ -103,7 +122,6 @@
         "ru": "6 мин",
         "en": "6 min"
       },
-      "featured": false,
       "cta": {
         "type": "external",
         "label": { "ru": "Обзор на Хабре", "en": "Read on Habr" },
@@ -126,8 +144,7 @@
       "readTime": {
         "ru": "2 мин",
         "en": "2 min"
-      },
-      "featured": false
+      }
     },
     {
       "id": "6",
@@ -146,7 +163,6 @@
         "ru": "4 мин",
         "en": "4 min"
       },
-      "featured": false,
       "cta": {
         "type": "external",
         "label": { "ru": "Репортаж с конференции", "en": "Conference recap" },

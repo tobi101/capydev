@@ -30,6 +30,7 @@ const lang = navigator.language.startsWith('en') ? 'en' : 'ru';
 
 // Экспортируем функцию для получения локализованного текста
 export function getLocalizedText(textObj, language) {
+    if (!textObj) return '';
     if (typeof textObj === 'string') return textObj;
     return textObj[language] || textObj['ru'] || textObj['en'] || '';
 }

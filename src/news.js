@@ -4,6 +4,10 @@ import { getLocalizedText } from './main.js';
 let newsData = null;
 let currentNewsLanguage = 'ru';
 let newsModalInitialized = false;
+let currentNewsPage = 0;
+let filteredNewsItems = null;
+
+const NEWS_ITEMS_PER_PAGE = 3;
 
 const CTA_TYPES = {
     MODAL: 'modal',
@@ -23,6 +27,13 @@ const newsModalElements = {
     cover: null
 };
 
+const paginationElements = {
+    container: null,
+    prevBtn: null,
+    nextBtn: null,
+    status: null
+};
+
 /**
  * Загружает данные новостей из JSON файла
  */
@@ -36,6 +47,13 @@ async function loadNewsData() {
         console.error('Ошибка загрузки данных новостей:', error);
         return null;
     }
+}
+
+function getActiveNewsItems() {
+    if (filteredNewsItems !== null) {
+        return filteredNewsItems;
+    }
+    return newsData?.items || [];
 }
 
 /**
@@ -63,15 +81,15 @@ function createNewsCard(newsItem, lang) {
     const timeMeta = renderMetaValue(readTime, 'time');
     
     const tags = newsItem.tags.map(tag => `<span class="news-tag">${tag}</span>`).join('');
-    
-    const featuredClass = newsItem.featured ? 'news-card-featured' : '';
+    const cardLabel = getLocalizedText(newsItem.label, lang);
+    const labelBadge = cardLabel ? `<div class="news-card-label">${cardLabel}</div>` : '';
     const ctaHtml = getCtaHtml(newsItem, lang);
     
     return `
-        <article class="news-card ${featuredClass}" data-id="${newsItem.id}">
+        <article class="news-card" data-id="${newsItem.id}">
             <div class="news-image">
                 <img src="${newsItem.image}" alt="${title}" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('no-image');">
-                ${newsItem.featured ? '<div class="featured-badge">Featured</div>' : ''}
+                ${labelBadge}
             </div>
             <div class="news-content">
                 <div class="news-meta">
@@ -152,7 +170,7 @@ function getCtaHtml(newsItem, lang) {
 /**
  * Рендерит секцию новостей
  */
-export function renderNews(lang) {
+export function renderNews(lang, page = currentNewsPage) {
     const container = document.getElementById('news-container');
     if (!container || !newsData) return;
 
@@ -164,18 +182,32 @@ export function renderNews(lang) {
         sectionTitle.textContent = getLocalizedText(newsData.localization.sectionTitle, lang);
     }
 
+    const activeItems = getActiveNewsItems();
+
     // Сортируем новости по дате (новые первые)
-    const sortedNews = [...newsData.items].sort((a, b) => 
+    const sortedNews = [...activeItems].sort((a, b) => 
         new Date(b.date) - new Date(a.date)
     );
 
-    // Показываем только первые 3 новости (можно изменить)
-    const displayNews = sortedNews.slice(0, 6);
+    const totalItems = sortedNews.length;
+    if (totalItems === 0) {
+        container.innerHTML = `<p class="news-empty">${lang === 'ru' ? 'Нет новостей' : 'No news yet'}</p>`;
+        updatePaginationUI(lang, 0, 0);
+        return;
+    }
+
+    const totalPages = Math.max(1, Math.ceil(totalItems / NEWS_ITEMS_PER_PAGE));
+    const clampedPage = Math.min(Math.max(page, 0), totalPages - 1);
+    currentNewsPage = clampedPage;
+
+    const startIndex = clampedPage * NEWS_ITEMS_PER_PAGE;
+    const displayNews = sortedNews.slice(startIndex, startIndex + NEWS_ITEMS_PER_PAGE);
 
     const newsHTML = displayNews.map(item => createNewsCard(item, lang)).join('');
     container.innerHTML = newsHTML;
 
     attachNewsCtaHandlers(lang);
+    updatePaginationUI(lang, totalPages, totalItems);
 
     // Анимация появления карточек
     animateNewsCards();
@@ -189,6 +221,67 @@ function attachNewsCtaHandlers(lang) {
             await openNewsDetail(newsId, lang);
         });
     });
+}
+
+function setupPaginationControls() {
+    if (paginationElements.container) return;
+
+    const container = document.getElementById('news-pagination');
+    const prevBtn = document.getElementById('news-prev');
+    const nextBtn = document.getElementById('news-next');
+    const status = document.getElementById('news-page-status');
+
+    if (!container || !prevBtn || !nextBtn || !status) {
+        return;
+    }
+
+    paginationElements.container = container;
+    paginationElements.prevBtn = prevBtn;
+    paginationElements.nextBtn = nextBtn;
+    paginationElements.status = status;
+
+    prevBtn.addEventListener('click', () => changeNewsPage(-1));
+    nextBtn.addEventListener('click', () => changeNewsPage(1));
+}
+
+function changeNewsPage(delta) {
+    const items = getActiveNewsItems();
+    if (!items.length) return;
+
+    const totalPages = Math.max(1, Math.ceil(items.length / NEWS_ITEMS_PER_PAGE));
+    const nextPage = Math.min(Math.max(currentNewsPage + delta, 0), totalPages - 1);
+
+    if (nextPage !== currentNewsPage) {
+        currentNewsPage = nextPage;
+        renderNews(currentNewsLanguage, currentNewsPage);
+    }
+}
+
+function updatePaginationUI(lang, totalPages, totalItems) {
+    const { container, prevBtn, nextBtn, status } = paginationElements;
+    if (!container || !prevBtn || !nextBtn || !status) return;
+
+    if (totalItems <= NEWS_ITEMS_PER_PAGE || totalPages <= 1) {
+        container.classList.add('hidden');
+        return;
+    }
+
+    container.classList.remove('hidden');
+
+    const prevLabel = getLocalizedText(newsData.localization.pagination?.prev, lang) || 'Previous';
+    const nextLabel = getLocalizedText(newsData.localization.pagination?.next, lang) || 'Next';
+
+    prevBtn.disabled = currentNewsPage === 0;
+    nextBtn.disabled = currentNewsPage >= totalPages - 1;
+    prevBtn.textContent = prevLabel;
+    nextBtn.textContent = nextLabel;
+    prevBtn.setAttribute('aria-label', prevLabel);
+    nextBtn.setAttribute('aria-label', nextLabel);
+
+    const statusTemplate = getLocalizedText(newsData.localization.pagination?.status, lang) || 'Page {current} of {total}';
+    status.textContent = statusTemplate
+        .replace('{current}', String(currentNewsPage + 1))
+        .replace('{total}', String(totalPages));
 }
 
 /**
@@ -233,26 +326,18 @@ async function openNewsDetail(newsId, lang) {
  * Фильтрует новости по тегу
  */
 export function filterNewsByTag(tag, language = currentNewsLanguage) {
-    const container = document.getElementById('news-container');
-    if (!container || !newsData) return;
+    if (!newsData) return;
 
-    let filteredNews = newsData.items;
-    
     if (tag && tag !== 'all') {
-        filteredNews = newsData.items.filter(item => 
+        filteredNewsItems = newsData.items.filter(item =>
             item.tags.some(t => t.toLowerCase() === tag.toLowerCase())
         );
+    } else {
+        filteredNewsItems = null;
     }
 
-    const sortedNews = [...filteredNews].sort((a, b) => 
-        new Date(b.date) - new Date(a.date)
-    );
-
-    const newsHTML = sortedNews.map(item => createNewsCard(item, language)).join('');
-    container.innerHTML = newsHTML;
-
-    attachNewsCtaHandlers(language);
-    animateNewsCards();
+    currentNewsPage = 0;
+    renderNews(language, currentNewsPage);
 }
 
 /**
@@ -261,6 +346,7 @@ export function filterNewsByTag(tag, language = currentNewsLanguage) {
 export async function initNews(language = 'ru') {
     await loadNewsData();
     setupNewsModal();
+    setupPaginationControls();
     
     if (newsData) {
         renderNews(language);
