@@ -1,4 +1,4 @@
-async function renderWorkflow(workflowData, lang) {
+export function renderWorkflow(workflowData, lang) {
     const container = document.getElementById('workflow-container');
     if (!container) return;
 

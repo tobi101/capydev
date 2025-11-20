@@ -1,4 +1,4 @@
-function renderProjects(data, lang) {
+export function renderProjects(data, lang) {
     const projectsContainer = document.getElementById("projects-container");
     if (!projectsContainer) return;
 

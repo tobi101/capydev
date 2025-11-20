@@ -5,7 +5,7 @@
  * @param {Object} data - JSON-объект с данными о команде.
  * @param {string} lang - Код языка (например, "ru" или "en").
  */
-function renderTeam(data, lang) {
+export function renderTeam(data, lang) {
     const teamContainer = document.getElementById("team-container");
     if (!teamContainer) return;
 

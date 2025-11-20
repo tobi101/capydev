@@ -1,4 +1,4 @@
-async function renderServices(servicesData, lang) {
+export function renderServices(servicesData, lang) {
     const container = document.getElementById('services-container');
     if (!container) return;
 

@@ -1,4 +1,4 @@
-async function renderContacts(contactsData, lang) {
+export function renderContacts(contactsData, lang) {
     const container = document.getElementById('contact-info');
     const formContainer = document.getElementById('contact-form');
     

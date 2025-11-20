@@ -1,11 +1,18 @@
+import JSON5 from 'json5';
+import { renderServices } from './services.js';
+import { renderWorkflow } from './workflow.js';
+import { renderContacts } from './contacts.js';
+import { renderProjects } from './projects.js';
+import { renderTeam } from './teamCards.js';
 
-// Функция для загрузки JSON-файлов
+// Функция для загрузки JSON5-файлов
 async function fetchJSON(url) {
     const response = await fetch(url);
     if (!response.ok) {
         throw new Error(`Ошибка при загрузке ${url}: ${response.status}`);
     }
-    return response.json();
+    const text = await response.text();
+    return JSON5.parse(text);
 }
 
 // Глобальные переменные с данными
@@ -100,12 +107,12 @@ async function loadData() {
 
         // Загружаем все данные параллельно
         const [content, projects, team, services, workflow, contacts] = await Promise.all([
-            fetchJSON('data/content.json'),
-            fetchJSON('data/projects.json'),
-            fetchJSON('data/team.json'),
-            fetchJSON('data/services.json'),
-            fetchJSON('data/workflow.json'),
-            fetchJSON('data/contacts.json')
+            fetchJSON('data/content.json5'),
+            fetchJSON('data/projects.json5'),
+            fetchJSON('data/team.json5'),
+            fetchJSON('data/services.json5'),
+            fetchJSON('data/workflow.json5'),
+            fetchJSON('data/contacts.json5')
         ]);
 
         contentData = content;
