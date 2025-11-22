@@ -347,21 +347,45 @@ export function filterNewsByTag(tag, language = currentNewsLanguage) {
 }
 
 /**
- * Инициализирует блок новостей
+ * Обновляет язык отображения новостей
  */
-export async function initNews(language = 'ru', uiTextsData = null) {
-    await loadNewsData();
-    setupNewsModal(uiTextsData, language);
-    setupPaginationControls(uiTextsData, language);
+export function updateNewsLanguage(language, uiTextsData = null) {
+    currentNewsLanguage = language;
     
+    // Обновляем aria-label модального окна
+    if (newsModalElements.closeBtn && uiTextsData?.newsModal) {
+        newsModalElements.closeBtn.setAttribute('aria-label', getLocalizedText(uiTextsData.newsModal.closeLabel, language));
+    }
+    
+    // Обновляем aria-label кнопок пагинации
+    if (paginationElements.prevBtn && paginationElements.nextBtn && uiTextsData?.newsPagination) {
+        paginationElements.prevBtn.setAttribute('aria-label', getLocalizedText(uiTextsData.newsPagination.prevLabel, language));
+        paginationElements.nextBtn.setAttribute('aria-label', getLocalizedText(uiTextsData.newsPagination.nextLabel, language));
+    }
+    
+    // Перерисовываем новости
     if (newsData) {
         renderNews(language);
     }
+}
 
-    // Слушаем изменение языка
-    window.addEventListener('languageChanged', (e) => {
-        renderNews(e.detail.language);
-    });
+/**
+ * Инициализирует блок новостей
+ */
+export async function initNews(language = 'ru', uiTextsData = null) {
+    if (!newsData) {
+        await loadNewsData();
+    }
+    
+    if (!newsModalInitialized) {
+        setupNewsModal(uiTextsData, language);
+    }
+    
+    if (!paginationElements.container) {
+        setupPaginationControls(uiTextsData, language);
+    }
+    
+    updateNewsLanguage(language, uiTextsData);
 }
 
 async function openNewsModal(newsItem, lang) {

@@ -4,7 +4,7 @@ import { renderWorkflow } from './workflow.js';
 import { renderContacts } from './contacts.js';
 import { renderProjects } from './projects.js';
 import { renderTeam } from './teamCards.js';
-import { initNews } from './news.js';
+import { initNews, updateNewsLanguage } from './news.js';
 
 // Функция для загрузки JSON5-файлов
 async function fetchJSON(url) {
@@ -157,6 +157,8 @@ function renderFooter(uiTextsData, lang) {
     }
 }
 
+let newsInitialized = false;
+
 async function loadData() {
     try {
         // Загружаем все данные параллельно
@@ -179,20 +181,27 @@ async function loadData() {
         uiTextsData = uiTexts;
 
         // Отрисовываем все секции
-        renderAllContent();
+        await renderAllContent();
 
     } catch (error) {
         console.error("Ошибка загрузки данных:", error);
     }
 }
 
-function renderAllContent() {
+async function renderAllContent() {
     renderPage();
     renderServices(servicesData, currentLanguage);
     renderWorkflow(workflowData, currentLanguage);
     renderProjects(projectsData, currentLanguage, uiTextsData);
     renderTeam(teamData, currentLanguage, uiTextsData);
-    initNews(currentLanguage, uiTextsData);
+    
+    if (!newsInitialized) {
+        await initNews(currentLanguage, uiTextsData);
+        newsInitialized = true;
+    } else {
+        updateNewsLanguage(currentLanguage, uiTextsData);
+    }
+    
     renderContacts(contactsData, currentLanguage);
     renderFooter(uiTextsData, currentLanguage);
     updateLanguageButton();
@@ -205,10 +214,10 @@ function updateLanguageButton() {
     }
 }
 
-function switchLanguage() {
+async function switchLanguage() {
     currentLanguage = currentLanguage === 'ru' ? 'en' : 'ru';
     localStorage.setItem('language', currentLanguage);
-    renderAllContent();
+    await renderAllContent();
 }
 
 function setupLanguageToggle() {
