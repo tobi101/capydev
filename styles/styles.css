@@ -2,9 +2,9 @@
    CSS VARIABLES - Централизованное управление
    =============================================== */
 :root {
-    --primary-color: #4CAF50;
-    --primary-dark: #45a049;
-    --primary-light: #66BB6A;
+    --primary-color: #FF8800;
+    --primary-dark: #c46901;
+    --primary-light: #ffae52;
     
     --bg-dark: #000;
     --bg-overlay: rgba(0, 0, 0, 0.8);
@@ -16,13 +16,13 @@
     --text-muted: #bbb;
     
     --border-subtle: rgba(255, 255, 255, 0.1);
-    --border-accent: rgba(76, 175, 80, 0.3);
+    --border-accent: rgba(42, 43, 65, 0.3);
     
-    --shadow-glow: 0 20px 40px rgba(76, 175, 80, 0.2);
-    --shadow-button: 0 10px 30px rgba(76, 175, 80, 0.4);
+    --shadow-glow: 0 20px 40px rgba(34, 34, 51, 0.2);
+    --shadow-button: 0 10px 30px rgba(42, 43, 65, 0.4);
     
     --gradient-primary: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
-    --gradient-bg: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+    --gradient-bg: linear-gradient(135deg, rgba(34, 34, 51, 1) 0%, rgba(42, 43, 65, 1) 100%);
     
     --transition-smooth: all 0.3s ease;
     --transition-medium: all 0.4s ease;
