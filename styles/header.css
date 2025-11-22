@@ -49,7 +49,7 @@
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 30px;
+    gap: 15px;
 }
 
 .header-nav li {
@@ -60,11 +60,13 @@
     color: var(--text-primary);
     text-decoration: none;
     font-weight: 500;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border-radius: 8px;
     transition: all 0.2s ease;
     position: relative;
     border: 1px solid transparent;
+    white-space: nowrap;
+    font-size: 0.95rem;
 }
 
 .header-nav a:hover {
@@ -78,6 +80,45 @@
     background: rgba(76, 175, 80, 0.2);
     color: var(--primary-color);
     border-color: rgba(76, 175, 80, 0.5);
+}
+
+/* Language Toggle */
+.language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid var(--border-accent);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+.language-toggle:hover {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.language-toggle:active {
+    transform: translateY(0);
+}
+
+.lang-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.lang-text {
+    font-family: monospace;
+    letter-spacing: 0.5px;
 }
 
 /* Mobile menu toggle */
@@ -153,6 +194,16 @@
     
     .mobile-menu-toggle {
         display: flex;
+    }
+    
+    .language-toggle {
+        margin-left: 10px;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .lang-icon {
+        font-size: 1rem;
     }
     
     .logo h1 {

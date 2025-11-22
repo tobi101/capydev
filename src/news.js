@@ -223,7 +223,7 @@ function attachNewsCtaHandlers(lang) {
     });
 }
 
-function setupPaginationControls() {
+function setupPaginationControls(uiTextsData = null, lang = 'ru') {
     if (paginationElements.container) return;
 
     const container = document.getElementById('news-pagination');
@@ -239,6 +239,12 @@ function setupPaginationControls() {
     paginationElements.prevBtn = prevBtn;
     paginationElements.nextBtn = nextBtn;
     paginationElements.status = status;
+
+    // Устанавливаем aria-label из uiTextsData
+    if (uiTextsData?.newsPagination) {
+        prevBtn.setAttribute('aria-label', getLocalizedText(uiTextsData.newsPagination.prevLabel, lang));
+        nextBtn.setAttribute('aria-label', getLocalizedText(uiTextsData.newsPagination.nextLabel, lang));
+    }
 
     prevBtn.addEventListener('click', () => changeNewsPage(-1));
     nextBtn.addEventListener('click', () => changeNewsPage(1));
@@ -343,10 +349,10 @@ export function filterNewsByTag(tag, language = currentNewsLanguage) {
 /**
  * Инициализирует блок новостей
  */
-export async function initNews(language = 'ru') {
+export async function initNews(language = 'ru', uiTextsData = null) {
     await loadNewsData();
-    setupNewsModal();
-    setupPaginationControls();
+    setupNewsModal(uiTextsData, language);
+    setupPaginationControls(uiTextsData, language);
     
     if (newsData) {
         renderNews(language);
@@ -522,7 +528,7 @@ function escapeHtml(value) {
         .replace(/>/g, '&gt;');
 }
 
-function setupNewsModal() {
+function setupNewsModal(uiTextsData = null, lang = 'ru') {
     if (newsModalInitialized) return;
 
     const wrapper = document.getElementById('newsModal');
@@ -538,6 +544,11 @@ function setupNewsModal() {
     newsModalElements.article = document.getElementById('newsModalArticle');
     newsModalElements.image = document.getElementById('newsModalImage');
     newsModalElements.cover = document.getElementById('newsModalCover');
+
+    // Устанавливаем aria-label из uiTextsData
+    if (newsModalElements.closeBtn && uiTextsData?.newsModal) {
+        newsModalElements.closeBtn.setAttribute('aria-label', getLocalizedText(uiTextsData.newsModal.closeLabel, lang));
+    }
 
     if (newsModalElements.image) {
         newsModalElements.image.addEventListener('error', () => {

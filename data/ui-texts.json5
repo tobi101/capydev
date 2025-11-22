@@ -86,5 +86,25 @@
       "ru": "Логотип",
       "en": "Logo"
     }
+  },
+  
+  // Модальное окно новостей
+  "newsModal": {
+    "closeLabel": {
+      "ru": "Закрыть новость",
+      "en": "Close news"
+    }
+  },
+  
+  // Пагинация новостей
+  "newsPagination": {
+    "prevLabel": {
+      "ru": "Предыдущие новости",
+      "en": "Previous news"
+    },
+    "nextLabel": {
+      "ru": "Следующие новости",
+      "en": "Next news"
+    }
   }
 }

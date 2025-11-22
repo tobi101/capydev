@@ -25,8 +25,9 @@ let workflowData = {};
 let contactsData = {};
 let uiTextsData = {};
 
-// Определяем язык (по умолчанию русский)
-const lang = navigator.language.startsWith('en') ? 'en' : 'ru';
+// Определяем язык (сначала проверяем localStorage, потом браузер)
+let currentLanguage = localStorage.getItem('language') || (navigator.language.startsWith('en') ? 'en' : 'ru');
+const lang = currentLanguage;
 
 // Экспортируем функцию для получения локализованного текста
 export function getLocalizedText(textObj, language) {
@@ -37,17 +38,17 @@ export function getLocalizedText(textObj, language) {
 
 function renderPage() {
     // Отрисовываем контент
-    document.getElementById('site-title').textContent = contentData.siteTitle[lang];
+    document.getElementById('site-title').textContent = contentData.siteTitle[currentLanguage];
     
     // Обновляем навигацию
     const navLinks = {
-        'link-about': contentData.nav.about[lang],
-        'link-services': contentData.nav.services[lang],
-        'link-projects': contentData.nav.projects[lang],
-        'link-workflow': contentData.nav.workflow[lang],
-        'link-team': contentData.nav.team[lang],
-        'link-news': contentData.nav.news ? contentData.nav.news[lang] : (lang === 'ru' ? 'Новости' : 'News'),
-        'link-contacts': contentData.nav.contacts[lang]
+        'link-about': contentData.nav.about[currentLanguage],
+        'link-services': contentData.nav.services[currentLanguage],
+        'link-projects': contentData.nav.projects[currentLanguage],
+        'link-workflow': contentData.nav.workflow[currentLanguage],
+        'link-team': contentData.nav.team[currentLanguage],
+        'link-news': contentData.nav.news ? contentData.nav.news[currentLanguage] : (currentLanguage === 'ru' ? 'Новости' : 'News'),
+        'link-contacts': contentData.nav.contacts[currentLanguage]
     };
 
     Object.entries(navLinks).forEach(([id, text]) => {
@@ -60,17 +61,17 @@ function renderPage() {
     const heroSubtitle = document.getElementById('hero-subtitle');
     const heroCta = document.getElementById('hero-cta');
     
-    if (heroTitle) heroTitle.textContent = contentData.hero.title[lang];
-    if (heroSubtitle) heroSubtitle.textContent = contentData.hero.subtitle[lang];
-    if (heroCta) heroCta.textContent = contentData.hero.cta[lang];
+    if (heroTitle) heroTitle.textContent = contentData.hero.title[currentLanguage];
+    if (heroSubtitle) heroSubtitle.textContent = contentData.hero.subtitle[currentLanguage];
+    if (heroCta) heroCta.textContent = contentData.hero.cta[currentLanguage];
 
     // Обновляем about секцию
     const aboutTitle = document.getElementById('about-title');
     const aboutDescription = document.getElementById('about-description');
     const aboutStats = document.getElementById('about-stats');
     
-    if (aboutTitle) aboutTitle.textContent = contentData.about.title[lang];
-    if (aboutDescription) aboutDescription.textContent = contentData.about.description[lang];
+    if (aboutTitle) aboutTitle.textContent = contentData.about.title[currentLanguage];
+    if (aboutDescription) aboutDescription.textContent = contentData.about.description[currentLanguage];
     
     if (aboutStats) {
         aboutStats.innerHTML = '';
@@ -79,10 +80,21 @@ function renderPage() {
             statElement.className = 'stat-item';
             statElement.innerHTML = `
                 <span class="stat-number">${stat.number}</span>
-                <span class="stat-label">${stat.label[lang]}</span>
+                <span class="stat-label">${stat.label[currentLanguage]}</span>
             `;
             aboutStats.appendChild(statElement);
         });
+    }
+    
+    // Обновляем заголовки других секций
+    const teamTitle = document.getElementById('team-title');
+    if (teamTitle && contentData.team) {
+        teamTitle.textContent = contentData.team.title[currentLanguage];
+    }
+    
+    const projectsTitle = document.getElementById('projects-title');
+    if (projectsTitle && contentData.projects) {
+        projectsTitle.textContent = contentData.projects.title[currentLanguage];
     }
 }
 
@@ -147,8 +159,6 @@ function renderFooter(uiTextsData, lang) {
 
 async function loadData() {
     try {
-        const lang = navigator.language.startsWith("en") ? "en" : "ru";
-
         // Загружаем все данные параллельно
         const [content, projects, team, services, workflow, contacts, uiTexts] = await Promise.all([
             fetchJSON('data/content.json5'),
@@ -169,18 +179,46 @@ async function loadData() {
         uiTextsData = uiTexts;
 
         // Отрисовываем все секции
-        renderPage();
-        renderServices(servicesData, lang);
-        renderWorkflow(workflowData, lang);
-        renderProjects(projectsData, lang, uiTextsData);
-        renderTeam(teamData, lang, uiTextsData);
-        await initNews(lang);
-        renderContacts(contactsData, lang);
-        renderFooter(uiTextsData, lang);
+        renderAllContent();
 
     } catch (error) {
         console.error("Ошибка загрузки данных:", error);
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadData);
+function renderAllContent() {
+    renderPage();
+    renderServices(servicesData, currentLanguage);
+    renderWorkflow(workflowData, currentLanguage);
+    renderProjects(projectsData, currentLanguage, uiTextsData);
+    renderTeam(teamData, currentLanguage, uiTextsData);
+    initNews(currentLanguage, uiTextsData);
+    renderContacts(contactsData, currentLanguage);
+    renderFooter(uiTextsData, currentLanguage);
+    updateLanguageButton();
+}
+
+function updateLanguageButton() {
+    const langButton = document.getElementById('current-lang');
+    if (langButton) {
+        langButton.textContent = currentLanguage.toUpperCase();
+    }
+}
+
+function switchLanguage() {
+    currentLanguage = currentLanguage === 'ru' ? 'en' : 'ru';
+    localStorage.setItem('language', currentLanguage);
+    renderAllContent();
+}
+
+function setupLanguageToggle() {
+    const languageToggle = document.getElementById('language-toggle');
+    if (languageToggle) {
+        languageToggle.addEventListener('click', switchLanguage);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+    setupLanguageToggle();
+});
