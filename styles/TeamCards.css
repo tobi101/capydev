@@ -1,6 +1,6 @@
 /* Team Section Styles */
 .team-section {
-    background: var(--gradient-purple-3);
+    background: linear-gradient(135deg, rgba(42, 42, 66, 1) 0%, rgba(50, 51, 78, 1) 100%);
 }
 
 .team-row {

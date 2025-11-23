@@ -1,6 +1,6 @@
 /* Projects Section */
 .projects-section {
-    background: var(--gradient-purple-2);
+    background: linear-gradient(135deg, rgba(37, 38, 57, 1) 0%, rgba(42, 43, 65, 1) 100%);
 }
 
 #projects-container {

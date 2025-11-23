@@ -215,7 +215,7 @@ section {
     justify-content: center;
     text-align: center;
     padding: 120px 0 80px;
-    background: var(--gradient-purple-1);
+    background: linear-gradient(135deg, rgba(42, 43, 65, 1) 0%, rgba(42, 43, 65, 1) 100%);
 }
 
 .hero-content {
@@ -249,7 +249,7 @@ section {
    Используется: блок с описанием компании и цифрами
    =============================================== */
 .about-section {
-    background: var(--gradient-purple-2);
+    background: linear-gradient(135deg, rgba(42, 42, 66, 1) 0%, rgba(50, 51, 78, 1) 100%);
     backdrop-filter: blur(10px);
     position: relative;
 }
@@ -265,7 +265,6 @@ section {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom left;
-    opacity: 0.3;
     pointer-events: none;
 }
 
@@ -334,7 +333,7 @@ section {
    Используется: блок с карточками услуг
    =============================================== */
 .services-section {
-    background: var(--gradient-purple-3);
+    background: linear-gradient(135deg, rgba(34, 34, 52, 1) 0%, rgba(42, 43, 65, 1) 100%);
     padding-top: 40px;
 }
 
@@ -442,7 +441,7 @@ section {
    Используется: блок с этапами разработки
    =============================================== */
 .workflow-section {
-    background: var(--gradient-purple-4);
+    background: linear-gradient(135deg, rgba(34, 34, 52, 1) 0%, rgba(42, 43, 65, 1) 100%);
 }
 
 .workflow-steps {
@@ -506,7 +505,7 @@ section {
    Используется: блок с контактной информацией и формой
    =============================================== */
 .contacts-section {
-    background: var(--gradient-purple-2);
+    background: linear-gradient(135deg, rgba(34, 34, 52, 1) 0%, rgba(42, 43, 65, 1) 100%);
     position: relative;
 }
 
@@ -521,7 +520,6 @@ section {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom left;
-    opacity: 0.3;
     pointer-events: none;
 }
 
