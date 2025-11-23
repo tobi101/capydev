@@ -212,7 +212,7 @@
 }
 
 .project-features li::before {
-    content: '✓';
+    content: '\2713'; /* checkmark ✓ */
     position: absolute;
     left: 0;
     color: var(--primary-color);
