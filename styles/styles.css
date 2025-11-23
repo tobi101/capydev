@@ -364,6 +364,9 @@ section {
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    max-width: 360px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .service-back-image {
