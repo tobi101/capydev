@@ -24,7 +24,8 @@ const newsModalElements = {
     tags: null,
     article: null,
     image: null,
-    cover: null
+    cover: null,
+    locale: null
 };
 
 const paginationElements = {
@@ -32,6 +33,35 @@ const paginationElements = {
     prevBtn: null,
     nextBtn: null,
     status: null
+};
+
+const ARTICLE_LOCALE_TEXT = {
+    ru: {
+        label: 'Язык статьи',
+        primary: 'Доступно на {language}',
+        fallback: 'Перевод в процессе — показываем {language}'
+    },
+    en: {
+        label: 'Article language',
+        primary: 'Available in {language}',
+        fallback: 'Showing {language} version for now'
+    }
+};
+
+const LANGUAGE_DISPLAY_NAMES = {
+    ru: {
+        ru: 'русском',
+        en: 'английском'
+    },
+    en: {
+        ru: 'Russian',
+        en: 'English'
+    }
+};
+
+const LANGUAGE_BADGES = {
+    ru: 'RU',
+    en: 'EN'
 };
 
 /**
@@ -153,7 +183,7 @@ function getCtaHtml(newsItem, lang) {
         `;
     }
 
-    if (cta.type === CTA_TYPES.MODAL && cta.markdown) {
+    if (cta.type === CTA_TYPES.MODAL && (cta.markdown || cta.markdownLocalized)) {
         return `
             <button class="news-read-more news-cta-modal" data-id="${newsItem.id}" data-action="modal">
                 ${label}
@@ -389,13 +419,19 @@ export async function initNews(language = 'ru', uiTextsData = null) {
 }
 
 async function openNewsModal(newsItem, lang) {
-    if (!newsItem.cta?.markdown) return;
+    if (!newsItem.cta || (!newsItem.cta.markdown && !newsItem.cta.markdownLocalized)) return;
     if (!newsModalInitialized) {
         setupNewsModal();
     }
 
     const { wrapper, title, date, readTime, tags, article, image, cover } = newsModalElements;
     if (!wrapper || !title || !article) return;
+
+    clearArticleLocaleInfo();
+    const articleSource = resolveNewsArticleSource(newsItem, lang);
+    if (!articleSource) {
+        return;
+    }
 
     const localizedTitle = getLocalizedText(newsItem.title, lang);
     title.textContent = localizedTitle;
@@ -430,11 +466,13 @@ async function openNewsModal(newsItem, lang) {
     }
 
     if (article) {
-        article.innerHTML = '<p class="news-modal-loading">Загружаем статью...</p>';
+        article.innerHTML = `<p class="news-modal-loading">${lang === 'ru' ? 'Загружаем статью...' : 'Loading article...'}</p>`;
     }
 
+    updateArticleLocaleInfo(articleSource.locale, lang, articleSource.isFallback);
+
     try {
-        const markdown = await fetchMarkdownFile(newsItem.cta.markdown);
+        const markdown = await fetchMarkdownFile(articleSource.path);
         const html = convertMarkdownToHtml(markdown);
         if (article) {
             article.innerHTML = html;
@@ -442,7 +480,7 @@ async function openNewsModal(newsItem, lang) {
     } catch (error) {
         console.error('Ошибка загрузки markdown для новости:', error);
         if (article) {
-            article.innerHTML = '<p class="news-modal-error">Не удалось загрузить статью. Попробуйте позже.</p>';
+            article.innerHTML = `<p class="news-modal-error">${lang === 'ru' ? 'Не удалось загрузить статью. Попробуйте позже.' : 'Failed to load the article. Please try again later.'}</p>`;
         }
     }
 
@@ -568,6 +606,7 @@ function setupNewsModal(uiTextsData = null, lang = 'ru') {
     newsModalElements.article = document.getElementById('newsModalArticle');
     newsModalElements.image = document.getElementById('newsModalImage');
     newsModalElements.cover = document.getElementById('newsModalCover');
+    newsModalElements.locale = document.getElementById('newsModalLocale');
 
     // Устанавливаем aria-label из uiTextsData
     if (newsModalElements.closeBtn && uiTextsData?.newsModal) {
@@ -599,6 +638,56 @@ function setupNewsModal(uiTextsData = null, lang = 'ru') {
     document.addEventListener('keydown', handleNewsModalEscape);
 
     newsModalInitialized = true;
+}
+
+function resolveNewsArticleSource(newsItem, lang) {
+    const cta = newsItem.cta;
+    if (!cta) return null;
+
+    if (cta.markdownLocalized && typeof cta.markdownLocalized === 'object') {
+        if (cta.markdownLocalized[lang]) {
+            return { path: cta.markdownLocalized[lang], locale: lang, isFallback: false };
+        }
+
+        const fallbackEntry = Object.entries(cta.markdownLocalized)
+            .find(([, value]) => typeof value === 'string');
+        if (fallbackEntry) {
+            const [fallbackLang, fallbackPath] = fallbackEntry;
+            return { path: fallbackPath, locale: fallbackLang, isFallback: true };
+        }
+    }
+
+    if (cta.markdown) {
+        const sourceLang = cta.lang || 'ru';
+        return { path: cta.markdown, locale: sourceLang, isFallback: lang !== sourceLang };
+    }
+
+    return null;
+}
+
+function updateArticleLocaleInfo(articleLang, uiLang, isFallback) {
+    const localeEl = newsModalElements.locale;
+    if (!localeEl || !articleLang) return;
+
+    const textPack = ARTICLE_LOCALE_TEXT[uiLang] || ARTICLE_LOCALE_TEXT.en;
+    const languageName = (LANGUAGE_DISPLAY_NAMES[uiLang] && LANGUAGE_DISPLAY_NAMES[uiLang][articleLang])
+        || articleLang.toUpperCase();
+    const badge = LANGUAGE_BADGES[articleLang] || articleLang.toUpperCase();
+    const template = isFallback ? textPack.fallback : textPack.primary;
+
+    localeEl.innerHTML = `
+        <span class="news-locale-label">${textPack.label}</span>
+        <span class="news-locale-chip">${badge}</span>
+        <span class="news-locale-note">${template.replace('{language}', languageName)}</span>
+    `;
+    localeEl.classList.toggle('is-fallback', isFallback);
+}
+
+function clearArticleLocaleInfo() {
+    if (newsModalElements.locale) {
+        newsModalElements.locale.textContent = '';
+        newsModalElements.locale.classList.remove('is-fallback');
+    }
 }
 
 function closeNewsModal() {

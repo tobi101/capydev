@@ -52,7 +52,10 @@
       "cta": {
         "type": "modal",
         "label": { "ru": "Читать кейс", "en": "Read case" },
-        "markdown": "data/news/optimization.md"
+        "markdownLocalized": {
+          "ru": "data/news/optimization.md",
+          "en": "data/news/optimization.en.md"
+        }
       }
     },
     {
@@ -102,7 +105,10 @@
       "cta": {
         "type": "modal",
         "label": { "ru": "Смотреть кейс", "en": "View case" },
-        "markdown": "data/news/telegram-case.md"
+        "markdownLocalized": {
+          "ru": "data/news/telegram-case.md",
+          "en": "data/news/telegram-case.en.md"
+        }
       }
     },
     {
