@@ -10,6 +10,15 @@ function initScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Добавляем visible к дочерним элементам секции, а не к самой секции
+                const animatedElements = entry.target.querySelectorAll('.section-title, .card, .workflow-step, .stat-item, .about-text, .about-stats');
+                animatedElements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('visible');
+                    }, index * 50); // Небольшая задержка между элементами
+                });
+                
+                // Также добавляем visible к самой секции для совместимости
                 entry.target.classList.add('visible');
             }
         });

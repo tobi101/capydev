@@ -1,4 +1,8 @@
 /* Projects Section */
+.projects-section {
+    background: var(--gradient-purple-2);
+}
+
 #projects-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

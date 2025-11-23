@@ -30,6 +30,10 @@
     /* Градиенты */
     --gradient-primary: linear-gradient(45deg, var(--primary-color), var(--primary-dark)); /* Основной градиент */
     --gradient-bg: linear-gradient(135deg, rgba(34, 34, 51, 1) 0%, rgba(42, 43, 65, 1) 100%); /* Фоновый градиент */
+    --gradient-purple-1: linear-gradient(135deg, #1a0033 0%, #2d1b4e 50%, #1a0033 100%); /* Темно-фиолетовый */
+    --gradient-purple-2: linear-gradient(135deg, #2d1b4e 0%, #4a2c6d 50%, #2d1b4e 100%); /* Средний фиолетовый */
+    --gradient-purple-3: linear-gradient(135deg, #0f0820 0%, #1e0d3a 50%, #0f0820 100%); /* Очень темный фиолетовый */
+    --gradient-purple-4: linear-gradient(135deg, #2a1548 0%, #3f2463 50%, #2a1548 100%); /* Насыщенный фиолетовый */
     
     /* Переходы */
     --transition-smooth: all 0.3s ease;  /* Быстрая анимация */
@@ -56,7 +60,7 @@ html {
 
 body {
     overflow-x: hidden;              /* Скрываем горизонтальную прокрутку */
-    background-color: var(--bg-dark);
+    background: var(--gradient-purple-1);
     font-family: 'Montserrat', 'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
@@ -117,10 +121,10 @@ canvas {
     border-radius: 20px;
     transition: var(--transition-medium);
     opacity: 0;
-    transform: translateY(50px);  /* Начальная позиция для анимации */
+    transform: translateY(50px);
 }
 
-section.visible .card {
+.card.visible {
     opacity: 1;
     transform: translateY(0);
 }
@@ -166,14 +170,7 @@ section.visible .card {
 section {
     padding: 80px 0;
     position: relative;
-    opacity: 0;
-    transform: translateY(50px);  /* Начальная позиция для анимации появления */
-    transition: all 0.8s ease-out;
-}
-
-section.visible {
-    opacity: 1;
-    transform: translateY(0);  /* Финальная позиция после появления */
+    /* Убираем анимацию самой секции, фон остается на месте */
 }
 
 /* Заголовки секций (О нас, Услуги, Проекты и т.д.) */
@@ -187,10 +184,10 @@ section.visible {
     position: relative;
     opacity: 0;
     transform: translateY(30px);
-    transition: all 0.6s ease-out 0.2s;
+    transition: all 0.6s ease-out;
 }
 
-section.visible .section-title {
+.section-title.visible {
     opacity: 1;
     transform: translateY(0);
 }
@@ -218,6 +215,7 @@ section.visible .section-title {
     justify-content: center;
     text-align: center;
     padding: 120px 0 80px;
+    background: var(--gradient-purple-1);
 }
 
 .hero-content {
@@ -251,7 +249,7 @@ section.visible .section-title {
    Используется: блок с описанием компании и цифрами
    =============================================== */
 .about-section {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--gradient-purple-2);
     backdrop-filter: blur(10px);
 }
 
@@ -285,7 +283,7 @@ section.visible .section-title {
     transform: translateX(50px);
 }
 
-section.visible .stat-item {
+.stat-item.visible {
     opacity: 1;
     transform: translateX(0);
 }
@@ -320,7 +318,7 @@ section.visible .stat-item {
    Используется: блок с карточками услуг
    =============================================== */
 .services-section {
-    background: var(--gradient-bg);
+    background: var(--gradient-purple-3);
 }
 
 .services-grid {
@@ -377,7 +375,7 @@ section.visible .stat-item {
    Используется: блок с этапами разработки
    =============================================== */
 .workflow-section {
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--gradient-purple-4);
 }
 
 .workflow-steps {
@@ -398,12 +396,6 @@ section.visible .stat-item {
     border-left: 4px solid var(--primary-color);
     transition: var(--transition-medium);
     opacity: 0;
-    transform: translateX(-50px);
-}
-
-section.visible .workflow-step {
-    opacity: 1;
-    transform: translateX(0);
 }
 
 .workflow-step:nth-child(odd) {
@@ -414,7 +406,8 @@ section.visible .workflow-step {
     transform: translateX(50px);
 }
 
-section.visible .workflow-step:nth-child(even) {
+.workflow-step.visible {
+    opacity: 1;
     transform: translateX(0);
 }
 
@@ -446,7 +439,7 @@ section.visible .workflow-step:nth-child(even) {
    Используется: блок с контактной информацией и формой
    =============================================== */
 .contacts-section {
-    background: var(--gradient-bg);
+    background: var(--gradient-purple-2);
 }
 
 .contacts-content {
@@ -615,7 +608,7 @@ section.visible .workflow-step:nth-child(even) {
 }
 
 .modal-content {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(76, 175, 80, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(26, 0, 51, 0.95) 0%, rgba(63, 36, 99, 0.3) 100%);
     margin: 5% auto;
     padding: 30px;
     border-radius: 20px;

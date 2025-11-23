@@ -1,4 +1,8 @@
 /* Team Section Styles */
+.team-section {
+    background: var(--gradient-purple-3);
+}
+
 .team-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
