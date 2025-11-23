@@ -24,8 +24,8 @@
     --border-accent: rgba(42, 43, 65, 0.3);     /* Акцентные границы */
     
     /* Тени */
-    --shadow-glow: 0 20px 40px rgba(34, 34, 51, 0.2);   /* Свечение для карточек */
-    --shadow-button: 0 10px 30px rgba(42, 43, 65, 0.4); /* Тень для кнопок */
+    --shadow-glow: 0 20px 40px rgba(255, 136, 0, 0.3);   /* Оранжевое свечение для карточек */
+    --shadow-button: 0 10px 30px rgba(255, 136, 0, 0.4); /* Оранжевая тень для кнопок */
     
     /* Градиенты */
     --gradient-primary: linear-gradient(45deg, var(--primary-color), var(--primary-dark)); /* Основной градиент */
@@ -339,43 +339,79 @@ section {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
 }
 
 .service-card {
-    padding: 40px 30px;
-    text-align: center;
+    aspect-ratio: 0.64;
+    position: relative;
+    padding: 30px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgb(43, 52, 69);
+    border: 2px solid var(--primary-color);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.service-back-image {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center top;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.service-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 30px rgba(255, 136, 0, 0.5), var(--shadow-glow);
+}
+
+.service-card > * {
+    position: relative;
+    z-index: 2;
 }
 
 .service-icon {
-    font-size: 3rem;
-    margin-bottom: 20px;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
     display: block;
 }
 
 .service-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: var(--primary-color);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     font-weight: bold;
 }
 
 .service-description {
     color: var(--text-secondary);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 .service-features {
     list-style: none;
+    margin-top: auto;
 }
 
 .service-features li {
     color: var(--text-muted);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     position: relative;
     padding-left: 20px;
+    font-size: 0.9rem;
 }
 
 .service-features li::before {
@@ -722,7 +758,7 @@ section {
     }
     
     .services-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 20px;
     }
 }
@@ -756,7 +792,10 @@ section {
     .about-stats { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
     
     .services-grid { grid-template-columns: 1fr; gap: 20px; }
-    .service-card { padding: 30px 20px; }
+    .service-card { 
+        padding: 25px 20px;
+        aspect-ratio: 0.64;
+    }
     
     .workflow-step { grid-template-columns: 60px 1fr; gap: 20px; padding: 20px; }
     .step-number { font-size: 1.5rem; }
