@@ -1,16 +1,20 @@
 ﻿/* Footer Styles */
 footer {
-    background: var(--gradient-purple-1);
+    background: linear-gradient(135deg, rgba(19, 28, 45, 1) 0%, rgba(22, 32, 51, 1) 100%);
     color: white;
     padding: 40px 20px;
     text-align: center;
     margin-top: -1px;
     border-top: 1px solid rgba(138, 43, 226, 0.2);
+    min-height: 148px;
+    display: flex;
+    align-items: center;
 }
 
 .footer-container {
     max-width: var(--max-width);
     margin: 0 auto;
+    width: 100%;
 }
 
 footer p {
