@@ -335,6 +335,15 @@ section {
    =============================================== */
 .services-section {
     background: var(--gradient-purple-3);
+    padding-top: 40px;
+}
+
+.services-section .container {
+    max-width: 1500px; /* Ширина контейнера для секции карточек услуг */
+}
+
+.services-section .section-title {
+    margin-bottom: 30px;
 }
 
 .services-grid {
