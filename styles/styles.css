@@ -251,6 +251,22 @@ section {
 .about-section {
     background: var(--gradient-purple-2);
     backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background-image: url('../assets/images/backLogo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .about-content {
@@ -440,6 +456,22 @@ section {
    =============================================== */
 .contacts-section {
     background: var(--gradient-purple-2);
+    position: relative;
+}
+
+.contacts-section::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background-image: url('../assets/images/backLogo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .contacts-content {
