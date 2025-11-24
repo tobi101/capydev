@@ -1,4 +1,4 @@
-import JSON5 from 'json5';
+import JSON5 from 'https://cdn.jsdelivr.net/npm/json5@2.2.3/+esm';
 import { renderServices } from './services.js';
 import { renderWorkflow } from './workflow.js';
 import { renderContacts } from './contacts.js';
