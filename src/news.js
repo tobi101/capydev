@@ -1,4 +1,4 @@
-import JSON5 from 'https://cdn.jsdelivr.net/npm/json5@2.2.3/+esm';
+import JSON5 from './vendor/json5.mjs';
 import { getLocalizedText } from './main.js';
 
 let newsData = null;
