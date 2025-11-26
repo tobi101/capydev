@@ -266,6 +266,7 @@ section {
     background-repeat: no-repeat;
     background-position: bottom left;
     pointer-events: none;
+    z-index: 0;
 }
 
 .about-content {
@@ -273,6 +274,8 @@ section {
     grid-template-columns: 2fr 1fr;
     gap: 60px;
     align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 .about-text p {
@@ -521,6 +524,7 @@ section {
     background-repeat: no-repeat;
     background-position: bottom left;
     pointer-events: none;
+    z-index: 0;
 }
 
 .contacts-content {
@@ -528,6 +532,8 @@ section {
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: start;
+    position: relative;
+    z-index: 1;
 }
 
 .contact-info {
