@@ -1,12 +1,34 @@
+let carouselState = {
+    currentIndex: 0,
+    isAnimating: false,
+    autoRotateInterval: null,
+    touchStartX: 0,
+    touchEndX: 0,
+    data: null,
+    lang: null,
+    uiTextsData: null
+};
+
 export function renderProjects(data, lang, uiTextsData) {
     const projectsContainer = document.getElementById("projects-container");
     if (!projectsContainer) return;
 
+    // Сохраняем данные в состоянии для использования в навигации
+    carouselState.data = data;
+    carouselState.lang = lang;
+    carouselState.uiTextsData = uiTextsData;
+
     projectsContainer.innerHTML = '';
+    projectsContainer.className = 'projects-carousel';
+
+    // Создаем обертку для карточек
+    const carouselTrack = document.createElement('div');
+    carouselTrack.className = 'carousel-track';
+    carouselTrack.id = 'carousel-track';
 
     data.items.forEach((item, index) => {
         const card = document.createElement("div");
-        card.className = "project-item card";
+        card.className = "project-item card carousel-card";
         card.dataset.index = index;
 
         const imageDiv = document.createElement("div");
@@ -36,8 +58,40 @@ export function renderProjects(data, lang, uiTextsData) {
 
         card.appendChild(imageDiv);
         card.appendChild(textDiv);
-        projectsContainer.appendChild(card);
+        carouselTrack.appendChild(card);
     });
+
+    projectsContainer.appendChild(carouselTrack);
+
+    // Создаем навигационные кнопки
+    const navPrev = document.createElement('button');
+    navPrev.className = 'carousel-nav carousel-prev';
+    navPrev.innerHTML = '&#10094;';
+    navPrev.setAttribute('aria-label', 'Previous project');
+
+    const navNext = document.createElement('button');
+    navNext.className = 'carousel-nav carousel-next';
+    navNext.innerHTML = '&#10095;';
+    navNext.setAttribute('aria-label', 'Next project');
+
+    projectsContainer.appendChild(navPrev);
+    projectsContainer.appendChild(navNext);
+
+    // Создаем индикаторы (точки)
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = 'carousel-dots';
+    data.items.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot';
+        dot.dataset.index = index;
+        dot.setAttribute('aria-label', `Go to project ${index + 1}`);
+        dotsContainer.appendChild(dot);
+    });
+    projectsContainer.appendChild(dotsContainer);
+
+    // Инициализируем карусель
+    initCarousel();
+    updateCarousel();
 
     // Добавляем обработчики для модальных окон
     document.querySelectorAll('.view-project-btn').forEach(btn => {
@@ -45,28 +99,218 @@ export function renderProjects(data, lang, uiTextsData) {
             e.preventDefault();
             e.stopPropagation();
             
-            // Анимация клика
-            const button = e.target;
-            button.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                button.style.transform = '';
-            }, 150);
+            const index = parseInt(e.target.dataset.projectIndex);
             
-            // Анимация карточки
-            const projectCard = button.closest('.project-item');
-            projectCard.style.transform = 'scale(0.98)';
-            projectCard.style.filter = 'brightness(1.1)';
-            
-            setTimeout(() => {
-                const index = parseInt(e.target.dataset.projectIndex);
+            // Открываем модальное окно только для центральной карточки
+            if (index === carouselState.currentIndex) {
                 openProjectModal(data.items[index], lang, uiTextsData);
-                
-                // Возвращаем карточку в исходное состояние
-                projectCard.style.transform = '';
-                projectCard.style.filter = '';
-            }, 200);
+            } else {
+                // Если кликнули на боковую карточку, переходим к ней
+                goToSlide(index);
+            }
         });
     });
+
+    // Добавляем клик по карточке для центрирования или открытия
+    document.querySelectorAll('.carousel-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (e.target.classList.contains('view-project-btn')) return;
+            
+            const index = parseInt(card.dataset.index);
+            if (index === carouselState.currentIndex) {
+                openProjectModal(data.items[index], lang, uiTextsData);
+            } else {
+                goToSlide(index);
+            }
+        });
+    });
+}
+
+function initCarousel() {
+    const navPrev = document.querySelector('.carousel-prev');
+    const navNext = document.querySelector('.carousel-next');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const carouselTrack = document.getElementById('carousel-track');
+
+    // Навигационные кнопки
+    if (navPrev) {
+        navPrev.addEventListener('click', () => {
+            previousSlide();
+            resetAutoRotate();
+        });
+    }
+
+    if (navNext) {
+        navNext.addEventListener('click', () => {
+            nextSlide();
+            resetAutoRotate();
+        });
+    }
+
+    // Индикаторы
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            goToSlide(index);
+            resetAutoRotate();
+        });
+    });
+
+    // Поддержка свайпов на мобильных
+    if (carouselTrack) {
+        carouselTrack.addEventListener('touchstart', handleTouchStart, { passive: true });
+        carouselTrack.addEventListener('touchmove', handleTouchMove, { passive: true });
+        carouselTrack.addEventListener('touchend', handleTouchEnd);
+    }
+
+    // Клавиатурная навигация
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            previousSlide();
+            resetAutoRotate();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            resetAutoRotate();
+        }
+    });
+
+    // Пауза автопрокрутки при наведении
+    const projectsContainer = document.getElementById('projects-container');
+    if (projectsContainer) {
+        projectsContainer.addEventListener('mouseenter', () => {
+            stopAutoRotate();
+        });
+
+        projectsContainer.addEventListener('mouseleave', () => {
+            startAutoRotate();
+        });
+    }
+
+    // Запускаем автопрокрутку
+    startAutoRotate();
+}
+
+function updateCarousel() {
+    const cards = document.querySelectorAll('.carousel-card');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const totalCards = cards.length;
+
+    if (totalCards === 0) return;
+
+    cards.forEach((card, index) => {
+        // Удаляем все классы позиций
+        card.classList.remove('active', 'left', 'right', 'far-left', 'far-right', 'hidden');
+        
+        const diff = index - carouselState.currentIndex;
+        
+        if (diff === 0) {
+            card.classList.add('active');
+        } else if (diff === 1 || diff === -(totalCards - 1)) {
+            card.classList.add('right');
+        } else if (diff === -1 || diff === (totalCards - 1)) {
+            card.classList.add('left');
+        } else if (diff === 2 || diff === -(totalCards - 2)) {
+            card.classList.add('far-right');
+        } else if (diff === -2 || diff === (totalCards - 2)) {
+            card.classList.add('far-left');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+
+    // Обновляем индикаторы
+    dots.forEach((dot, index) => {
+        if (index === carouselState.currentIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+function nextSlide() {
+    if (carouselState.isAnimating) return;
+    
+    const totalCards = document.querySelectorAll('.carousel-card').length;
+    carouselState.isAnimating = true;
+    
+    carouselState.currentIndex = (carouselState.currentIndex + 1) % totalCards;
+    updateCarousel();
+    
+    setTimeout(() => {
+        carouselState.isAnimating = false;
+    }, 600);
+}
+
+function previousSlide() {
+    if (carouselState.isAnimating) return;
+    
+    const totalCards = document.querySelectorAll('.carousel-card').length;
+    carouselState.isAnimating = true;
+    
+    carouselState.currentIndex = (carouselState.currentIndex - 1 + totalCards) % totalCards;
+    updateCarousel();
+    
+    setTimeout(() => {
+        carouselState.isAnimating = false;
+    }, 600);
+}
+
+function goToSlide(index) {
+    if (carouselState.isAnimating) return;
+    
+    carouselState.isAnimating = true;
+    carouselState.currentIndex = index;
+    updateCarousel();
+    
+    setTimeout(() => {
+        carouselState.isAnimating = false;
+    }, 600);
+}
+
+function handleTouchStart(e) {
+    carouselState.touchStartX = e.touches[0].clientX;
+}
+
+function handleTouchMove(e) {
+    carouselState.touchEndX = e.touches[0].clientX;
+}
+
+function handleTouchEnd() {
+    const diff = carouselState.touchStartX - carouselState.touchEndX;
+    const threshold = 50;
+
+    if (Math.abs(diff) > threshold) {
+        if (diff > 0) {
+            nextSlide();
+        } else {
+            previousSlide();
+        }
+        resetAutoRotate();
+    }
+
+    carouselState.touchStartX = 0;
+    carouselState.touchEndX = 0;
+}
+
+function startAutoRotate() {
+    if (carouselState.autoRotateInterval) return;
+    
+    carouselState.autoRotateInterval = setInterval(() => {
+        nextSlide();
+    }, 5000);
+}
+
+function stopAutoRotate() {
+    if (carouselState.autoRotateInterval) {
+        clearInterval(carouselState.autoRotateInterval);
+        carouselState.autoRotateInterval = null;
+    }
+}
+
+function resetAutoRotate() {
+    stopAutoRotate();
+    startAutoRotate();
 }
 
 function openProjectModal(project, lang, uiTextsData) {
