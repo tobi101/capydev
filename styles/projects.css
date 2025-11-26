@@ -8,12 +8,12 @@
 .projects-carousel {
     position: relative;
     width: 100%;
-    height: 600px;
+    height: 520px;
     display: flex;
     align-items: center;
     justify-content: center;
     perspective: 2000px;
-    padding: 40px 0;
+    padding: 0;
 }
 
 /* Carousel Track */
@@ -30,7 +30,7 @@
 /* Project Cards - используем общий .card класс */
 .carousel-card {
     position: absolute;
-    width: 400px;
+    width: 450px;
     max-width: 90vw;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
@@ -51,28 +51,28 @@
 }
 
 .carousel-card.left {
-    transform: translateX(-450px) translateZ(-200px) scale(0.75);
+    transform: translateX(-380px) translateZ(-200px) scale(0.75);
     opacity: 0.5;
     z-index: 5;
     filter: blur(1px);
 }
 
 .carousel-card.right {
-    transform: translateX(450px) translateZ(-200px) scale(0.75);
+    transform: translateX(380px) translateZ(-200px) scale(0.75);
     opacity: 0.5;
     z-index: 5;
     filter: blur(1px);
 }
 
 .carousel-card.far-left {
-    transform: translateX(-750px) translateZ(-400px) scale(0.5);
+    transform: translateX(-650px) translateZ(-400px) scale(0.5);
     opacity: 0.2;
     z-index: 1;
     filter: blur(2px);
 }
 
 .carousel-card.far-right {
-    transform: translateX(750px) translateZ(-400px) scale(0.5);
+    transform: translateX(650px) translateZ(-400px) scale(0.5);
     opacity: 0.2;
     z-index: 1;
     filter: blur(2px);
@@ -93,7 +93,7 @@
 /* Project Image */
 .project-image {
     position: relative;
-    height: 250px;
+    height: 320px;
     overflow: hidden;
 }
 
