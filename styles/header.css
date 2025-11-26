@@ -268,14 +268,14 @@
         width: 100%;
     }
     
-    .header-nav li {
-        width: 100% !important;
+    .header-nav.mobile-active li {
+        width: 100%;
         list-style: none;
     }
     
-    .header-nav a {
-        display: block !important;
-        width: 100% !important;
+    .header-nav.mobile-active a {
+        display: block;
+        width: 100%;
         padding: 15px 20px;
         border-radius: 8px;
         background: var(--bg-card);
