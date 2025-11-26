@@ -14,7 +14,7 @@
     {
       "name": { "ru": "Иван Иванов", "en": "Ivan Ivanov" },
       "role": { "ru": "Главный разработчик", "en": "Lead Developer" },
-      "photo": "assets/images/profile1.webp",
+      "photo": "assets/images/profileAva1.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
         "ru": "Подробное описание участника команды. Опыт, навыки и достижения.",
@@ -30,7 +30,7 @@
     {
       "name": { "ru": "Петр Петров", "en": "Petr Petrov" },
       "role": { "ru": "Художник", "en": "Artist" },
-      "photo": "assets/images/profile2.webp",
+      "photo": "assets/images/profileAva2.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
         "ru": "Подробное описание участника команды. Информация о художественном опыте, стилях и проектах.",
@@ -41,6 +41,38 @@
         "twitter": "http://twitter.com/petr",
         "skype": "http://skype.com/petr",
         "google": "http://google.com/petr"
+      }
+    },
+    {
+      "name": { "ru": "Михаил Михайлов", "en": "Mikhail Mikhailov" },
+      "role": { "ru": "Менеджер проекта", "en": "Project Manager" },
+      "photo": "assets/images/profileAva3.jpg",
+      "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
+      "detailDescription": {
+        "ru": "Подробное описание участника команды. Навыки управления проектами и коммуникации.",
+        "en": "Detailed description about team member. Project management and communication skills."
+      },
+      "social": {
+        "facebook": "http://facebook.com/misha",
+        "twitter": "http://twitter.com/misha",
+        "skype": "http://skype.com/misha",
+        "google": "http://google.com/misha"
+      }
+    },
+    {
+      "name": { "ru": "Егор Егоров", "en": "Egor Egorov" },
+      "role": { "ru": "Тестировщик", "en": "Tester" },
+      "photo": "assets/images/profileAva4.jpg",
+      "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
+      "detailDescription": {
+        "ru": "Подробное описание участника команды. Опыт в тестировании и обеспечении качества.",
+        "en": "Detailed description about team member. Experience in testing and quality assurance."
+      },
+      "social": {
+        "facebook": "http://facebook.com/egor",
+        "twitter": "http://twitter.com/egor",
+        "skype": "http://skype.com/egor",
+        "google": "http://google.com/egor"
       }
     }
   ]
