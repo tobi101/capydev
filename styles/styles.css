@@ -281,7 +281,10 @@ section {
 .about-text p {
     font-size: 1.2rem;
     line-height: 1.8;
-    color: var(--text-secondary);
+    color: var(--text-primary);
+    background: linear-gradient(135deg, rgba(22, 20, 40, 1) 0%, rgba(101, 82, 189, 0) 100%);
+    padding: 35px 40px;
+    border-left: 4px solid var(--primary-color);
 }
 
 .about-stats {
