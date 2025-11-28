@@ -173,6 +173,8 @@
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    /* Фиксированная высота для 3 строк: font-size * line-height * 3 = 15px * 1.7 * 3 ≈ 76.5px */
+    min-height: calc(15px * 1.7 * 3);
 }
 
 /* News Tags */
@@ -196,6 +198,11 @@
 .news-card:hover .news-tag {
     background: rgba(255, 136, 0, 0.25);
     border-color: rgba(255, 136, 0, 0.5);
+}
+
+/* CTA Wrapper - фиксированная высота для стабильного размера карточек */
+.news-cta-wrapper {
+    min-height: 44px;
 }
 
 /* Read More Button */
@@ -266,6 +273,8 @@
 
     .news-excerpt {
         font-size: 14px;
+        /* Фиксированная высота для 3 строк на мобильных: 14px * 1.7 * 3 */
+        min-height: calc(14px * 1.7 * 3);
     }
 }
 

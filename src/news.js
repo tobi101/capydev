@@ -7,7 +7,11 @@ let newsModalInitialized = false;
 let currentNewsPage = 0;
 let filteredNewsItems = null;
 
-const NEWS_ITEMS_PER_PAGE = 3;
+// Параметры для расчёта количества карточек в строке
+const NEWS_CARD_MIN_WIDTH = 350; // минимальная ширина карточки из CSS
+const NEWS_CARD_GAP = 30; // gap между карточками из CSS
+let newsItemsPerPage = 3; // будет пересчитываться динамически
+let resizeTimeout = null;
 
 const CTA_TYPES = {
     MODAL: 'modal',
@@ -57,6 +61,24 @@ function getActiveNewsItems() {
 }
 
 /**
+ * Вычисляет количество карточек, помещающихся в одну строку
+ */
+function calculateNewsItemsPerPage() {
+    const container = document.getElementById('news-container');
+    if (!container) return 3;
+
+    const containerWidth = container.offsetWidth;
+    if (containerWidth <= 0) return 3;
+
+    // Вычисляем сколько карточек помещается в одну строку
+    // Формула: (containerWidth + gap) / (cardWidth + gap)
+    const itemsCount = Math.floor((containerWidth + NEWS_CARD_GAP) / (NEWS_CARD_MIN_WIDTH + NEWS_CARD_GAP));
+    
+    // Минимум 1 карточка
+    return Math.max(1, itemsCount);
+}
+
+/**
  * Форматирует дату в читаемый формат
  */
 function formatDate(dateString, lang) {
@@ -101,7 +123,9 @@ function createNewsCard(newsItem, lang) {
                 <div class="news-tags">
                     ${tags}
                 </div>
-                ${ctaHtml}
+                <div class="news-cta-wrapper">
+                    ${ctaHtml}
+                </div>
             </div>
         </article>
     `;
@@ -176,6 +200,9 @@ export function renderNews(lang, page = currentNewsPage) {
 
     currentNewsLanguage = lang;
 
+    // Пересчитываем количество карточек на страницу
+    newsItemsPerPage = calculateNewsItemsPerPage();
+
     // Обновляем заголовок секции
     const sectionTitle = document.getElementById('news-title');
     if (sectionTitle) {
@@ -196,12 +223,12 @@ export function renderNews(lang, page = currentNewsPage) {
         return;
     }
 
-    const totalPages = Math.max(1, Math.ceil(totalItems / NEWS_ITEMS_PER_PAGE));
+    const totalPages = Math.max(1, Math.ceil(totalItems / newsItemsPerPage));
     const clampedPage = Math.min(Math.max(page, 0), totalPages - 1);
     currentNewsPage = clampedPage;
 
-    const startIndex = clampedPage * NEWS_ITEMS_PER_PAGE;
-    const displayNews = sortedNews.slice(startIndex, startIndex + NEWS_ITEMS_PER_PAGE);
+    const startIndex = clampedPage * newsItemsPerPage;
+    const displayNews = sortedNews.slice(startIndex, startIndex + newsItemsPerPage);
 
     const newsHTML = displayNews.map(item => createNewsCard(item, lang)).join('');
     container.innerHTML = newsHTML;
@@ -254,7 +281,7 @@ function changeNewsPage(delta) {
     const items = getActiveNewsItems();
     if (!items.length) return;
 
-    const totalPages = Math.max(1, Math.ceil(items.length / NEWS_ITEMS_PER_PAGE));
+    const totalPages = Math.max(1, Math.ceil(items.length / newsItemsPerPage));
     const nextPage = Math.min(Math.max(currentNewsPage + delta, 0), totalPages - 1);
 
     if (nextPage !== currentNewsPage) {
@@ -267,7 +294,7 @@ function updatePaginationUI(lang, totalPages, totalItems) {
     const { container, prevBtn, nextBtn, status } = paginationElements;
     if (!container || !prevBtn || !nextBtn || !status) return;
 
-    if (totalItems <= NEWS_ITEMS_PER_PAGE || totalPages <= 1) {
+    if (totalItems <= newsItemsPerPage || totalPages <= 1) {
         container.classList.add('hidden');
         return;
     }
@@ -372,6 +399,26 @@ export function updateNewsLanguage(language, uiTextsData = null) {
 /**
  * Инициализирует блок новостей
  */
+/**
+ * Обработчик изменения размера окна
+ */
+function handleNewsResize() {
+    if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+    }
+    
+    resizeTimeout = setTimeout(() => {
+        const newItemsPerPage = calculateNewsItemsPerPage();
+        
+        // Перерисовываем только если количество карточек изменилось
+        if (newItemsPerPage !== newsItemsPerPage) {
+            // Сбрасываем на первую страницу при изменении размера
+            currentNewsPage = 0;
+            renderNews(currentNewsLanguage, currentNewsPage);
+        }
+    }, 150);
+}
+
 export async function initNews(language = 'ru', uiTextsData = null) {
     if (!newsData) {
         await loadNewsData();
@@ -384,6 +431,9 @@ export async function initNews(language = 'ru', uiTextsData = null) {
     if (!paginationElements.container) {
         setupPaginationControls(uiTextsData, language);
     }
+    
+    // Добавляем обработчик resize для пересчёта количества карточек
+    window.addEventListener('resize', handleNewsResize);
     
     updateNewsLanguage(language, uiTextsData);
 }
