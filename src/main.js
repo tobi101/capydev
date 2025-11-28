@@ -3,7 +3,7 @@ import { renderServices } from './services.js';
 import { renderWorkflow } from './workflow.js';
 import { renderContacts } from './contacts.js';
 import { renderProjects } from './projects.js';
-import { renderTeam } from './teamCards.js';
+import { renderTeam, setupTeamPagination, initTeamResize, updateTeamLanguage } from './teamCards.js';
 import { initNews, updateNewsLanguage } from './news.js';
 
 // Функция для загрузки JSON5-файлов
@@ -158,6 +158,7 @@ function renderFooter(uiTextsData, lang) {
 }
 
 let newsInitialized = false;
+let teamInitialized = false;
 
 async function loadData() {
     try {
@@ -193,7 +194,16 @@ async function renderAllContent() {
     renderServices(servicesData, currentLanguage);
     renderWorkflow(workflowData, currentLanguage);
     renderProjects(projectsData, currentLanguage, uiTextsData);
-    renderTeam(teamData, currentLanguage, uiTextsData);
+    
+    // Инициализация команды с пагинацией
+    if (!teamInitialized) {
+        setupTeamPagination();
+        initTeamResize();
+        renderTeam(teamData, currentLanguage, uiTextsData);
+        teamInitialized = true;
+    } else {
+        updateTeamLanguage(currentLanguage, uiTextsData);
+    }
     
     if (!newsInitialized) {
         await initNews(currentLanguage, uiTextsData);

@@ -215,3 +215,65 @@
         padding: 3px 8px;
     }
 }
+
+/* Team Pagination */
+.team-pagination {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.team-pagination.hidden {
+    display: none;
+}
+
+.team-page-btn {
+    background: rgba(255, 136, 0, 0.2);
+    border: 1px solid rgba(255, 136, 0, 0.45);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.team-page-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-color: transparent;
+    box-shadow: 0 10px 25px rgba(255, 136, 0, 0.35);
+}
+
+.team-page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.team-page-status {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.team-empty {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+    .team-page-btn {
+        min-width: 80px;
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .team-pagination {
+        gap: 10px;
+    }
+}

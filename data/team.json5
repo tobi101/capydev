@@ -6,7 +6,27 @@
     "sectionTitle": {
       "ru": "Команда",
       "en": "Team"
+    },
+    "pagination": {
+      "prev": {
+        "ru": "Назад",
+        "en": "Back"
+      },
+      "next": {
+        "ru": "Далее",
+        "en": "Next"
+      },
+      "status": {
+        "ru": "Страница {current} из {total}",
+        "en": "Page {current} of {total}"
+      }
     }
+  },
+  
+  // Настройки отображения
+  "display": {
+    "maxColumns": 4,  // максимальное число столбцов
+    "maxRows": 1      // максимальное число строк
   },
   
   // Члены команды (карточки)
