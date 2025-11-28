@@ -12,6 +12,7 @@ const NEWS_CARD_MIN_WIDTH = 350; // минимальная ширина карт
 const NEWS_CARD_GAP = 30; // gap между карточками из CSS
 let newsItemsPerPage = 3; // будет пересчитываться динамически
 let resizeTimeout = null;
+let isFirstNewsRender = true;
 
 const CTA_TYPES = {
     MODAL: 'modal',
@@ -237,7 +238,9 @@ export function renderNews(lang, page = currentNewsPage) {
     updatePaginationUI(lang, totalPages, totalItems);
 
     // Анимация появления карточек
-    animateNewsCards();
+    // При первом рендере используем IntersectionObserver, при переключении страниц - сразу
+    animateNewsCards(!isFirstNewsRender);
+    isFirstNewsRender = false;
 }
 
 function attachNewsCtaHandlers(lang) {
@@ -319,26 +322,37 @@ function updatePaginationUI(lang, totalPages, totalItems) {
 
 /**
  * Анимирует появление карточек новостей
+ * @param {boolean} immediate - если true, анимирует сразу (при переключении страниц)
  */
-function animateNewsCards() {
-    const cards = document.querySelectorAll('.news-card');
+function animateNewsCards(immediate = false) {
+    const cards = document.querySelectorAll('.news-card:not(.visible)');
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 100);
-                observer.unobserve(entry.target);
-            }
+    if (immediate) {
+        // При переключении страниц - анимируем сразу с задержкой
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('visible');
+            }, index * 100);
         });
-    }, {
-        threshold: 0.1
-    });
+    } else {
+        // При первой загрузке - используем IntersectionObserver
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
 
-    cards.forEach(card => {
-        observer.observe(card);
-    });
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    }
 }
 
 /**
