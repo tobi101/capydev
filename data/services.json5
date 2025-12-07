@@ -23,7 +23,8 @@
       "features": [
         { "ru": "Unity, Unreal Engine, Cocos", "en": "Unity, Unreal Engine, Cocos" },
         { "ru": "Мобильные платформы", "en": "Mobile platforms" },
-        { "ru": "PC/Console игры", "en": "PC/Console games" }
+        { "ru": "PC/Console игры", "en": "PC/Console games" },
+        { "ru": "WebGL игры", "en": "WebGL games"}
       ]
     },
     // Услуга 2: Геймдизайн

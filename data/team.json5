@@ -32,8 +32,8 @@
   // Члены команды (карточки)
   "items": [
     {
-      "name": { "ru": "Иван Иванов", "en": "Ivan Ivanov" },
-      "role": { "ru": "Главный разработчик", "en": "Lead Developer" },
+      "name": { "ru": "Данила Каменев", "en": "Daniel Stone" },
+      "role": { "ru": "CEO, Marketing", "en": "CEO, Marketing" },
       "photo": "assets/images/profileAva1.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
@@ -48,8 +48,8 @@
       }
       },
     {
-      "name": { "ru": "Петр Петров", "en": "Petr Petrov" },
-      "role": { "ru": "Художник", "en": "Artist" },
+      "name": { "ru": "Ольга Кошка", "en": "Olga Koshka" },
+      "role": { "ru": "Lead Artist", "en": "Lead Artist" },
       "photo": "assets/images/profileAva2.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
@@ -64,8 +64,8 @@
       }
     },
     {
-      "name": { "ru": "Михаил Михайлов", "en": "Mikhail Mikhailov" },
-      "role": { "ru": "Менеджер проекта", "en": "Project Manager" },
+      "name": { "ru": "Сергей Решетников", "en": "Sergey Reshetnikov" },
+      "role": { "ru": "Lead Developer", "en": "Lead Developer" },
       "photo": "assets/images/profileAva3.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
@@ -80,8 +80,8 @@
       }
     },
     {
-      "name": { "ru": "Егор Егоров", "en": "Egor Egorov" },
-      "role": { "ru": "Тестировщик", "en": "Tester" },
+      "name": { "ru": "Сергей Сергеев", "en": "Sergey Sergeev" },
+      "role": { "ru": "Lead Developer", "en": "Lead Developer" },
       "photo": "assets/images/profileAva4.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {

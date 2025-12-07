@@ -23,15 +23,15 @@
       "type": "email",
       "icon": "📧",
       "label": { "ru": "Email", "en": "Email" },
-      "value": "hello@capydev.studio",
-      "link": "mailto:hello@capydev.studio"
+      "value": "studio@capydev.com",
+      "link": "mailto:studio@capydev.com"
     },
     {
       "type": "telegram",
       "icon": "💬",
       "label": { "ru": "Telegram", "en": "Telegram" },
-      "value": "@capydev_studio",
-      "link": "https://t.me/capydev_studio"
+      "value": "@capy_dev",
+      "link": "https://t.me/capy_dev"
     },
     {
       "type": "discord",
