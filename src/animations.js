@@ -159,6 +159,23 @@ function initHeroAnimations() {
     }
 }
 
+function reanimateVisibleSections() {
+    const sections = document.querySelectorAll('section.visible');
+
+    sections.forEach(section => {
+        const animatedElements = section.querySelectorAll('.section-title, .card, .workflow-step, .stat-item, .about-text, .about-stats, .service-card');
+
+        animatedElements.forEach((el, index) => {
+            el.classList.remove('visible');
+            setTimeout(() => {
+                el.classList.add('visible');
+            }, index * 50);
+        });
+    });
+}
+
+window.reanimateVisibleSections = reanimateVisibleSections;
+
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         initAnimations();

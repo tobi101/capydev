@@ -12,14 +12,6 @@
   // Список проектов (карточки проектов)
   "items": [
     {
-      "title": { "ru": "Card Fusion 2048", "en": "Card Fusion 2048" },
-      "shortDescription": {
-        "ru": "Краткое описание игры 1.",
-        "en": "Short description of Game 1."
-      },
-      "previewImage": "assets/images/gameImage3.webp"
-    },
-    {
       "title": { "ru": "VHS2. The Exit is Inside ", "en": "VHS2. The Exit is Inside" },
       "shortDescription": {
         "ru": "Краткое описание игры 2.",
@@ -27,13 +19,5 @@
       },
       "previewImage": "assets/images/vhs2.webp"
     },
-    {
-      "title": { "ru": "Игра 3", "en": "Game 3" },
-      "shortDescription": {
-        "ru": "Краткое описание игры 3.",
-        "en": "Short description of Game 3."
-      },
-      "previewImage": "assets/images/example3.webp"
-    }
   ]
 }

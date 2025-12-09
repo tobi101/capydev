@@ -60,8 +60,8 @@
       "number": "06",
       "title": { "ru": "Релиз и поддержка", "en": "Release & Support" },
       "description": {
-        "ru": "Подготовка к релизу, публикация в магазинах приложений и постоянная поддержка",
-        "en": "Release preparation, publishing to app stores and ongoing support"
+        "ru": "Подготовка к релизу, публикация в магазинах приложений и поддержка после релиза",
+        "en": "Release preparation, publishing to app stores and post-release support"
       },
       "icon": "🚀"
     }

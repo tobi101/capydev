@@ -228,6 +228,8 @@ async function switchLanguage() {
     currentLanguage = currentLanguage === 'ru' ? 'en' : 'ru';
     localStorage.setItem('language', currentLanguage);
     await renderAllContent();
+
+    window.reanimateVisibleSections?.();
 }
 
 function setupLanguageToggle() {

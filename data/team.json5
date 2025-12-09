@@ -33,12 +33,12 @@
   "items": [
     {
       "name": { "ru": "Данила Каменев", "en": "Daniel Stone" },
-      "role": { "ru": "CEO, Marketing", "en": "CEO, Marketing" },
+      "role": { "ru": "Marketing", "en": "Marketing" },
       "photo": "assets/images/profileAva1.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
-        "ru": "Подробное описание участника команды. Опыт, навыки и достижения.",
-        "en": "Detailed description about team member. Experience, skills, and achievements."
+        "ru": "Краткое описание участника команды.",
+        "en": "Short description about team member."
       },
       "social": {
         "facebook": "http://facebook.com/ivan",
@@ -49,12 +49,12 @@
       },
     {
       "name": { "ru": "Ольга Кошка", "en": "Olga Koshka" },
-      "role": { "ru": "Lead Artist", "en": "Lead Artist" },
+      "role": { "ru": "Art", "en": "Art" },
       "photo": "assets/images/profileAva2.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
-        "ru": "Подробное описание участника команды. Информация о художественном опыте, стилях и проектах.",
-        "en": "Detailed description about team member. Info about art experience, styles and projects."
+        "ru": "Краткое описание участника команды.",
+        "en": "Short description about team member."
       },
       "social": {
         "facebook": "http://facebook.com/petr",
@@ -65,12 +65,12 @@
     },
     {
       "name": { "ru": "Сергей Решетников", "en": "Sergey Reshetnikov" },
-      "role": { "ru": "Lead Developer", "en": "Lead Developer" },
+      "role": { "ru": "Development", "en": "Development" },
       "photo": "assets/images/profileAva3.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
-        "ru": "Подробное описание участника команды. Навыки управления проектами и коммуникации.",
-        "en": "Detailed description about team member. Project management and communication skills."
+        "ru": "Краткое описание участника команды.",
+        "en": "Short description about team member."
       },
       "social": {
         "facebook": "http://facebook.com/misha",
@@ -81,12 +81,12 @@
     },
     {
       "name": { "ru": "Сергей Сергеев", "en": "Sergey Sergeev" },
-      "role": { "ru": "Lead Developer", "en": "Lead Developer" },
+      "role": { "ru": "Development", "en": "Development" },
       "photo": "assets/images/profileAva4.jpg",
       "shortDescription": { "ru": "Краткое описание", "en": "Short description" },
       "detailDescription": {
-        "ru": "Подробное описание участника команды. Опыт в тестировании и обеспечении качества.",
-        "en": "Detailed description about team member. Experience in testing and quality assurance."
+        "ru": "Краткое описание участника команды.",
+        "en": "Short description about team member."
       },
       "social": {
         "facebook": "http://facebook.com/egor",

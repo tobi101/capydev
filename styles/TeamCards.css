@@ -3,9 +3,13 @@
     background: linear-gradient(135deg, rgba(42, 42, 66, 1) 0%, rgba(50, 51, 78, 1) 100%);
 }
 
+.team-section .container {
+    max-width: 1350px;
+}
+
 .team-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
     padding: 20px 0;
 }

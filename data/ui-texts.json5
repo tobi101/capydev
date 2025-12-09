@@ -51,10 +51,10 @@
   // Футер
   "footer": {
     "copyright": {
-      "ru": "© 2025-2026 Студия по разработке игр. Все права защищены.",
+      "ru": "© 2025-2026 Студия разработки игр. Все права защищены.",
       "en": "© 2025-2026 Game Development Studio. All rights reserved."
     },
-    "contactEmail": "contact@gameoutsourcing.com",
+    "contactEmail": "studio@capydev.com",
     "links": {
       "contacts": {
         "ru": "Контакты",
